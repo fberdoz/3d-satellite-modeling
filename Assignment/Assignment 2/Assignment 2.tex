@@ -1,0 +1,400 @@
+\documentclass[11pt, oneside]{article}  	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{a4paper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+\usepackage[parfill]{parskip}    			% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+
+\graphicspath{ {images/} }
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage[latin1]{inputenc} 
+
+% Prof. Forbes math packages
+\usepackage{amsmath} % cmex10
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+
+% Matrix command
+\newcommand{\bma}[1]{\left[\begin{array}{#1}}
+\newcommand{\ema}{\end{array}\right]}
+\newcommand{\trans}{{\ensuremath{\mathsf{T}}}} % transpose
+\newcommand{\utimes}{ {\raisebox{-0.6ex}{ \kern-1.0ex\raisebox{0.6ex}{ \small $\mathsf{v}$}}} } % 
+\newcommand{\onehalf}{\mbox{$\textstyle{\frac{1}{2}}$}}
+
+
+% Bold symbols
+\DeclareMathAlphabet{\mbf}{OT1}{ptm}{b}{n} % for bold face Roman
+\newcommand{\mbs}[1]{{\boldsymbol{#1}}} % for bold face Greek
+
+% Other bold symbols 
+\newcommand{\mbfbar}[1]{{\bar{\mbf{#1}}}}
+\newcommand{\mbfhat}[1]{{\hat{\mbf{#1}}}}
+\newcommand{\mbftilde}[1]{{\tilde{\mbf{#1}}}}
+\newcommand{\mbsbar}[1]{{\bar{\boldsymbol{#1}}}}
+\newcommand{\mbshat}[1]{{\hat{\boldsymbol{#1}}}}
+\newcommand{\mbstilde}[1]{{\tilde{\boldsymbol{#1}}}}
+
+% Physical Space, physical vectors, a vectrix, etc. 
+\newcommand{\pspace}{\mathbb{P}} 
+\newcommand{\ura}[1]{{\underrightarrow{{#1}}}}
+\newcommand{\vectrix}[1]{\ensuremath \underrightarrow{\boldsymbol{\mathcal{F}}}_{#1}}
+\def\fdota{{\raisebox{-2pt}{\LARGE $\cdot$}}}
+\def\fdotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ$}}}}
+\def\fddota{{\raisebox{-2pt}{\LARGE $\cdot\hspace*{-0.2ex}\cdot$}}}
+\def\fddotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ\circ$}}}}
+\newcommand{\fdot}[1]{{^{\fdota{\mbox{\footnotesize${#1}$}}}}}
+\newcommand{\fddot}[1]{{^{\fddota{\mbox{\footnotesize${#1}$}}}}}
+
+
+% Short form for equations
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bdis}{\begin{displaymath}}
+\newcommand{\edis}{\end{displaymath}}
+\newcommand{\beqarray}{\begin{eqnarray}}
+\newcommand{\eeqarray}{\end{eqnarray}}
+\newcommand{\beqarraynn}{\begin{eqnarray*}}
+\newcommand{\eeqarraynn}{\end{eqnarray*}}
+
+%Must be equal to ...
+\newcommand{\mbeq}{\overset{!}{=}}
+
+% Cross operator
+\newcommand{\crossop}[3]{\bma{ccc} 0 & -#3 & #2 \\ #3 & 0 & -#1 \\ -#2 & #1 & 0 \ema}
+\newcommand{\matr}[9]{\bma{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \ema}
+\newcommand{\colvec}[3]{\bma{c} #1 \\ #2 \\ #3 \ema}
+\newcommand{\rowvec}[3]{\bma{ccc} #1 & #2 & #3 \ema}
+
+\lhead{\footnotesize MECH 642\\Advanced Dynamics}
+\rhead{\footnotesize Assignment 2\\ Frédéric Berdoz, 260867318}
+
+\begin{document}
+
+\title{Assignment 2}
+\author{Frédéric Berdoz\\260867318}
+\date{}
+
+\maketitle
+
+% Question 1 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+From the definition of $\ura{u}$ and $\ura{v}$, we have:
+$$\mbf{u}_a=
+\bma{c}
+	4\\
+	u_{a2}\\
+	-2
+\ema, \qquad
+\mbf{v}_a=
+\bma{c}
+	1\\
+	3\\
+	5
+\ema
+$$
+\paragraph{a)}
+Using the definition of the dot product:
+$$
+\ura{u}\cdot\ura{v}=\mbf{u}_a^\trans\mbf{v}_a=4+3u_{a2}-10=-6+3u_{a2}\mbeq12
+$$
+Solving for $u_{a2}$:
+$$u_{a2}=\frac{12+6}{3}=6$$
+
+\paragraph{b)}
+Using the definition of the cross product:
+$$\ura{u}\times\ura{v}=\vectrix{a}^\trans\mbf{u}_a^\times\mbf{v}_a=\vectrix{a}^\trans\bma{ccc} 0 & 2 & u_{a2} \\ -2 & 0 & -4 \\ -u_{a2}& 4 & 0 \ema\bma{c}1\\3\\5\ema=\vectrix{a}^\trans\bma{c}6+5u_{a2}\\ -22 \\ -u_{a2}+12\ema\mbeq\vectrix{a}^\trans\bma{c}16 \\ -22 \\ 10 \ema$$
+Solving for $u_{a2}$, we have the following two equations:
+$$u_{a2}=\frac{16-6}{5}=2$$
+$$u_{a2}=-(10-12)=2$$
+Therefore, $u_{a2}=2$ is the unique solution.
+
+% Question 2 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+\begin{align*}
+\mbox{det }\mbs{\omega}_a^\times & =
+\mbox{det}\crossop{\omega_{a1}}{\omega_{a2}}{\omega_{a3}}=
+\bma{c}
+	0\\
+	\omega_{a3}\\
+	-\omega_{a2}
+\ema^\trans
+\bma{c}
+	-\omega_{a3}\\
+	0\\
+	\omega_{a1}
+\ema^\times
+\bma{c}
+	\omega_{a2}\\
+	-\omega_{a1}\\
+	0
+\ema
+\\ & =
+\bma{ccc}
+	0 & \omega_{a3} & -\omega_{a2}
+\ema
+\matr{0}{-\omega_{a1}}{0}{\omega_{a1}}{0}{\omega_{a3}}{0}{-\omega_{a3}}{0}
+\bma{c}
+	\omega_{a2}\\
+	-\omega_{a1}\\
+	0
+\ema
+\\ & =
+\bma{ccc}
+	0 & \omega_{a3} & -\omega_{a2}
+\ema
+\bma{c}
+	\omega_{a1}^2 \\
+	\omega_{a1}\omega_{a2} \\
+	\omega_{a3}\omega_{a1}
+\ema
+=\omega_{a3}\omega_{a1}\omega_{a2}-\omega_{a2}\omega_{a3}\omega_{a1}=0
+\end{align*}
+Therefore, $\mbs{\omega}_a^\times$ is not invertible.
+
+% Question 3 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+\paragraph{a)}
+By inspection, we can see that:
+$$r_{b1}=r_{a1}=1, \quad r_{b2}=r_{a3}=4, \quad r_{b3}=-r_{a2}=-3$$
+Therefore, $\mbf{r}_b=\bma{ccc} 1 & 4 & -3 \ema^\trans$
+
+\paragraph{b)}
+$\mathcal{F}_b$ is obtained by rotating $\mathcal{F}_a$ about $\ura{a}^1$ by $90°$ .
+
+\begin{align*}
+\mbf{C}_{ba} & = \vectrix{b}\cdot \vectrix{a}^\trans=\colvec{\ura{b}^1}{\ura{b}^2}{\ura{b}^3}\cdot\rowvec{\ura{a}^1}{\ura{a}^2}{\ura{a}^3}
+=\matr{\ura{b}^1\cdot\ura{a}^1}{\ura{b}^1\cdot\ura{a}^2}{\ura{b}^1\cdot\ura{a}^3}{\ura{b}^2\cdot\ura{a}^1}{\ura{b}^2\cdot\ura{a}^2}{\ura{b}^2\cdot\ura{a}^3}{\ura{b}^3\cdot\ura{a}^1}{\ura{b}^3\cdot\ura{a}^2}{\ura{b}^3\cdot\ura{a}^3} 
+\\ & =
+\matr{1}{0}{0}{0}{0}{1}{0}{-1}{0}
+\end{align*}
+where the dot products where found by looking at Figure 1.
+\paragraph{c)}
+$$\mbf{r}_b=\mbf{C}_{ba}\mbf{r}_a=\matr{1}{0}{0}{0}{0}{1}{0}{-1}{0}\colvec{1}{3}{4}=\colvec{1}{4}{-3}$$
+This corresponds to the solution found in a).
+
+% Question 4 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{} 
+\begin{align*}
+\mbox{det }\mbf{Q} & =\mbox{det}\matr{0}{\onehalf}{-\frac{\sqrt{3}}{2}}{1}{0}{0}{0}{\frac{\sqrt{3}}{2}}{\onehalf}
+=\colvec{0}{1}{0}^\trans\colvec{\onehalf}{0}{\frac{\sqrt{3}}{2}}^\times\colvec{-\frac{\sqrt{3}}{2}}{0}{\onehalf}
+\\ & =
+\rowvec{0}{1}{0}\matr{0}{-\frac{\sqrt{3}}{2}}{0}{\frac{\sqrt{3}}{2}}{0}{-\onehalf}{0}{\onehalf}{0}\colvec{-\frac{\sqrt{3}}{2}}{0}{\onehalf}
+\\ & =
+\rowvec{0}{1}{0}\colvec{0}{-1}{0}=-1
+\end{align*}
+In conclusion, $\mbf{Q}$ is not a valid direction cosine matrix because its determinant is different than  +1.
+
+% Question 5 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+From the definition of the cross product:
+$$
+\ura{u}\times\ura{v}=\vectrix{a}^\trans\mbf{u}_a^\times\mbf{v}_a=\vectrix{b}^\trans\mbf{u}_b^\times\mbf{v}_b
+$$
+Multiplying on the left by $\vectrix{b}$ (dot product), we get:
+\beq
+\vectrix{b}\cdot\vectrix{a}^\trans\mbf{u}_a^\times\mbf{v}_a=\vectrix{b}\cdot\vectrix{b}^\trans\mbf{u}_b^\times\mbf{v}_b
+\label{eq:1}
+\eeq
+Recall:
+\beq
+\vectrix{b}\cdot\vectrix{a}^\trans=\mbf{C}_{ba}
+\label{eq:2}
+\eeq
+\beq
+\vectrix{b}\cdot\vectrix{b}^\trans=\mbf{1}
+\label{eq:3}
+\eeq
+Substituting \eqref{eq:2} and \eqref{eq:3} into \eqref{eq:1}, we obtain:
+\beq
+\mbf{C}_{ba}\mbf{u}_a^\times\mbf{v}_a=\mbf{u}_b^\times\mbf{v}_b
+\label{eq:4}
+\eeq
+Now, from the definition of the DCM:
+\beq
+\mbf{v}_a=\mbf{C}_{ab}\mbf{v}_b=\mbf{C}_{ba}^\trans\mbf{v}_b
+\label{eq:5}
+\eeq
+\beq
+\mbf{u}_b=\mbf{C}_{ba}\mbf{u}_a
+\label{eq:6}
+\eeq
+Substituting \eqref{eq:5} and \eqref{eq:6} into \eqref{eq:4}, we obtain:
+\beq
+\mbf{C}_{ba}\mbf{u}_a^\times\mbf{C}_{ba}^\trans\mbf{v}_b=(\mbf{C}_{ba}\mbf{u}_a)^\times\mbf{v}_b
+\label{eq:7}
+\eeq
+Since \eqref{eq:7} must be valid for any $\ura{v}$ (hence any $\mbf{v}_b$): $$\mbf{C}_{ba}\mbf{u}_a^\times\mbf{C}_{ba}^\trans=(\mbf{C}_{ba}\mbf{u}_a)^\times \quad \Box$$
+
+% Question 6 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+\paragraph{a)}
+We have:
+\beq
+	\ura{T}=\vectrix{a}^\trans\mbf{T}_a\vectrix{a}=\vectrix{b}^\trans\mbf{T}_b\vectrix{b}
+	\label{eq:a}
+\eeq
+Taking the dot product on the left with $\vectrix{b}$ and on the right with $\vectrix{b}^\trans$:
+\bdis
+\underbrace{\vectrix{b}\cdot\vectrix{a}^\trans}_{\mbf{C}_{ba}}\mbf{T}_a\underbrace{\vectrix{a}\cdot\vectrix{b}^\trans}_{\mbf{C}_{ab}}=\underbrace{\vectrix{b}\cdot\vectrix{b}^\trans}_{\mbf{1}}\mbf{T}_b\underbrace{\vectrix{b}\cdot\vectrix{b}^\trans}_{\mbf{1}}
+\edis
+Where we used the definition of the direction cosine matrix. Rewriting both sides:
+\bdis
+\mbf{C}_{ba}\mbf{T}_a\mbf{C}_{ab}=\mbf{T}_b \quad \Box
+\edis
+\paragraph{b)}
+Using \eqref{eq:a} and $\ura{u}=\vectrix{a}^\trans\mbf{u}_a$, we find:
+\bdis
+\ura{T}\cdot\ura{u}=\vectrix{b}^\trans\mbf{T}_b\underbrace{\vectrix{b}\cdot\vectrix{a}^\trans}_{\mbf{C}_{ba}}\mbf{u}_a=\vectrix{b}^\trans\mbf{T}_b\mbf{C}_{ba}\mbf{u}_a \quad \Box
+\edis
+
+% Question 7 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+\paragraph{a)}
+\begin{align*}
+(\lambda-1)(\lambda^2+\lambda(1-\mbox{tr}\mbf{C}_{qp})+1) & =
+(\lambda-1)\lambda^2+(\lambda-1)(\lambda-\lambda\mbox{tr}\mbf{C}_{qp})+(\lambda-1) 
+\\ & =
+\lambda^3-\lambda^2+\lambda^2-\lambda^2\mbox{tr}\mbf{C}_{qp}-\lambda+\lambda\mbox{tr}\mbf{C}_{qp}+\lambda-1
+\\ & =
+\lambda^3-\lambda^2\mbox{tr}\mbf{C}_{qp}+\lambda\mbox{tr}\mbf{C}_{qp}-1
+\\ & =
+0 \quad \Box
+\end{align*}
+One obvious solution of this equation is $\lambda_1=+1$, which is therefore also an eigenvalue of $\mbf{C}_{qp}$.
+\paragraph{b)}
+Recall that the trace is a linear operator, i.e. $\forall \alpha, \beta \in \mathbb{C}, \forall \mbf{A}, \mbf{B} \in \mathbb{C}^{n\times n}, \, n\in \mathbb{N}$: $$\mbox{tr}(\alpha\mbf{A}+\beta\mbf{B})=\alpha\mbox{tr}\mbf{A}+\beta\mbox{tr}\mbf{B}$$
+Therefore, we can express the trace of $\mbf{C}_{qp}$ as follows:
+\beq
+\mbox{tr}\mbf{C}_{qp} = \cos\phi\,\mbox{tr}(\mbf{1})+(1-\cos\phi)\mbox{tr}(\mbf{aa}^\trans)-\sin\phi\,\mbox{tr}(\mbf{a}^\times)
+\label{eq:b}
+\eeq
+We can now compute the trace of each element.
+
+\begin{itemize}
+\item Trivially:
+\beq
+\mbox{tr}(\mbf{1})=3
+\label{eq:c}
+\eeq
+\item Let $\mbf{a}=\rowvec{a_1}{a_2}{a_3}^\trans$, therefore:
+$$
+\mbf{aa}^\trans=\colvec{a_1}{a_2}{a_3}\rowvec{a_1}{a_2}{a_3}
+=\matr{a_1^2}{a_1a_2}{a_1a_3}{a_2a_1}{a_2^2}{a_2a_3}{a_3a_1}{a_3a_2}{a_3^2}
+$$
+By inspection: 
+\beq
+\mbox{tr}(\mbf{aa}^\trans)=a_1^2+a_2^2+a_3^2={\Vert\ura{a}\Vert}_2=1
+\label{eq:d}
+\eeq
+\item Taking the same generic notation for $\mbf{a}$:
+$$
+\mbf{a}^\times=\crossop{a_1}{a_2}{a_3}
+$$
+By inspection: 
+\beq
+\mbox{tr}(\mbf{a}^\times)=0
+\label{eq:e}
+\eeq
+\end{itemize}
+Substituting \eqref{eq:c}, \eqref{eq:d} and \eqref{eq:e} into \eqref{eq:b}:
+\bdis
+\mbox{tr}\mbf{C}_{qp} = 3\cos\phi+(1-\cos\phi)=1+2\cos\phi \quad \Box
+\edis
+Using this result and the fact that $\mbf{C}_{qp}\in\mbox{SO(3)}$, we have the two following conditions:
+\beq
+\mbox{det}\mbf{C}_{qp}=\lambda_1\lambda_2\lambda_3=1
+\label{eq:f}
+\eeq
+\beq
+\mbox{tr}\mbf{C}_{qp}=\lambda_1+\lambda_2+\lambda_3=1+2\cos\phi
+\label{eq:g}
+\eeq
+Since we have already found that $\lambda_1=1$, \eqref{eq:f} and  \eqref{eq:g} become: 
+\beq
+\lambda_2\lambda_3=1
+\label{eq:h}
+\eeq
+\beq
+\lambda_2+\lambda_3=2\cos\phi
+\label{eq:i}
+\eeq
+From \eqref{eq:i}, we find:
+\beq
+\lambda_3=2\cos\phi-\lambda_2
+\label{eq:j}
+\eeq
+Substituting \eqref{eq:j} into \eqref{eq:h}:
+\beq
+\lambda_2(2\cos\phi-\lambda_2)=1
+\label{eq:k}
+\eeq
+We can now rearrange \eqref{eq:k} as follows:
+\beq
+\lambda_2^2-2\cos\phi\lambda_2+1=0
+\label{eq:l}
+\eeq
+This is simply a quadratic equation that we can solve as follows:
+\begin{align*}
+\lambda_2 & =
+\cos\phi\pm\sqrt{\cos^2\phi-1}=\cos\phi\pm\sqrt{(-1)(1-\cos^2\phi)}
+\\ & =
+\cos\phi\pm \sqrt{-1}\sqrt{\sin^2\phi}=\cos\phi\pm i\sin\phi=e^{\pm i\phi}
+\label{eq:m}
+\end{align*}
+Substituting this solution into \eqref{eq:h}:
+$$e^{\pm i\phi}\lambda_3=1\quad\Rightarrow\quad\lambda_3=\frac{1}{e^{\pm i\phi}}=e^{\mp i\phi}$$
+In other words, $\lambda_2$ is the complex conjugate of $\lambda_3$ and vice versa. It doesn't matter which one has the positive sign in the exponent.
+% Question 8 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+First, let's derive some useful properties:
+$$
+\mbf{a}^\times\mbf{a}^\times=\mbf{aa}^\trans-\mbf{a}^\trans\mbf{a1}=\mbf{aa}^\trans-\mbf{1}
+$$
+$$
+(\mbf{aa}^\trans-\mbf{1})^2=\mbf{a}\overbrace{\mbf{a}^\trans\mbf{a}}^{=\ 1}\mbf{a}^\trans-2\mbf{aa}^\trans+\mbf{1}=\mbf{1}-\mbf{a}\mbf{a}^\trans
+$$
+$$
+(\mbf{aa}^\trans-\mbf{1})^3=(\mbf{aa}^\trans-\mbf{1})^2(\mbf{aa}^\trans-\mbf{1})=(\mbf{1}-\mbf{a}\mbf{a}^\trans)(\mbf{aa}^\trans-\mbf{1})=\mbf{aa}^\trans-\mbf{1}
+$$
+$$
+\vdots$$
+$$
+(\mbf{aa}^\trans-\mbf{1})^n=(-1)^n(\mbf{1}-\mbf{aa}^\trans), \quad n\in\mathbb{N}\setminus\{0\}
+$$
+Moreover:
+$$
+\mbf{a}^\times(\mbf{1}-\mbf{aa}^\trans)=\mbf{a}^\times-\overbrace{\mbf{a}^\times\mbf{a}}^{=\,\mbf{0}}\mbf{a}^\trans=\mbf{a}^\times
+$$
+Now, let's expand the expression for $e^{-\phi\mbf{a}^\times}$ using the definition of the matrix exponential and the former properties:
+\begin{align*}
+e^{-\phi\mbf{a}^\times} 
+& =
+\sum_{k=0}^{\infty}\frac{(-\phi)^k}{k!}(\mbf{a}^\times)^k
+\\ & = 
+\sum_{l=0}^{\infty}\frac{\overbrace{(-1)^{2l}}^{=\ 1}\phi^{2l}}{(2l)!}(\mbf{a}^\times)^{2l}
++\sum_{m=0}^{\infty}\frac{\overbrace{(-1)^{2m+1}}^{=-1}\phi^{2m+1}}{(2m+1)!}(\mbf{a}^\times)^{2m+1}
+\\ & =
+\sum_{l=0}^{\infty}\frac{\phi^{2l}}{(2l)!}(\overbrace{\mbf{a}^\times\mbf{a}^\times}^{=\ \mbf{aa}^\trans-\mbf{1}})^{l}
+-\sum_{m=0}^{\infty}\frac{\phi^{2m+1}}{(2m+1)!}\mbf{a}^\times(\overbrace{\mbf{a}^\times\mbf{a}^\times}^{=\ \mbf{aa}^\trans-\mbf{1}})^{m}
+\\ & =
+\mbf{1}+\sum_{l=1}^{\infty}\frac{\phi^{2l}}{(2l)!}\overbrace{(\mbf{aa}^\trans-\mbf{1})^{l}}^{=\,(-1)^l(\mbf{1}-\mbf{aa}^\trans)}
+-\left(\phi\mbf{a}^\times+\sum_{m=1}^{\infty}\frac{\phi^{2m+1}}{(2m+1)!}\mbf{a}^\times\overbrace{(\mbf{aa}^\trans-\mbf{1})^{m}}^{=\,(-1)^m(\mbf{1}-\mbf{aa}^\trans)}\right)
+\\ & =
+\mbf{1}+\overbrace{\sum_{l=1}^{\infty}\frac{(-1)^l\phi^{2l}}{(2l)!}}^{=\ \cos\phi\,-1}(\mbf{1}-\mbf{aa}^\trans)
+-\left(\phi\mbf{a}^\times+\sum_{m=1}^{\infty}\frac{(-1)^m\phi^{2m+1}}{(2m+1)!}\overbrace{\mbf{a}^\times(\mbf{1}-\mbf{aa}^\trans)}^{=\,\mbf{a}^\times}\right)
+\\ & =
+\mbf{1}+(\cos\phi-1)(\mbf{1}-\mbf{aa}^\trans)
+-\overbrace{\sum_{m=0}^{\infty}\frac{(-1)^m\phi^{2m+1}}{(2m+1)!}}^{=\,\sin\phi}\mbf{a}^\times
+\\ & =
+\cos\phi\mbf{1}+(1-\cos\phi)\mbf{aa}^\trans-\sin\phi\mbf{a}^\times \quad \Box
+\end{align*}
+\end{document}
+
+

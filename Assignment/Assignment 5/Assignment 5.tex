@@ -1,0 +1,500 @@
+\documentclass[11pt, oneside]{article}  	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{a4paper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+\usepackage[parfill]{parskip}    			% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+
+\graphicspath{ {images/} }
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage[latin1]{inputenc} 
+
+% Prof. Forbes math packages
+\usepackage{amsmath} % cmex10
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+
+% Matrix command
+\newcommand{\bma}[1]{\left[\begin{array}{#1}}
+\newcommand{\ema}{\end{array}\right]}
+\newcommand{\trans}{{\ensuremath{\mathsf{T}}}} % transpose
+\newcommand{\utimes}{ {\raisebox{-0.6ex}{ \kern-1.0ex\raisebox{0.6ex}{ \small $\mathsf{v}$}}} } % 
+\newcommand{\onehalf}{\mbox{$\textstyle{\frac{1}{2}}$}}
+
+
+% Bold symbols
+\DeclareMathAlphabet{\mbf}{OT1}{ptm}{b}{n} % for bold face Roman
+\newcommand{\mbs}[1]{{\boldsymbol{#1}}} % for bold face Greek
+
+% Other bold symbols 
+\newcommand{\mbfbar}[1]{{\bar{\mbf{#1}}}}
+\newcommand{\mbfhat}[1]{{\hat{\mbf{#1}}}}
+\newcommand{\mbftilde}[1]{{\tilde{\mbf{#1}}}}
+\newcommand{\mbsbar}[1]{{\bar{\boldsymbol{#1}}}}
+\newcommand{\mbshat}[1]{{\hat{\boldsymbol{#1}}}}
+\newcommand{\mbstilde}[1]{{\tilde{\boldsymbol{#1}}}}
+
+% Physical Space, physical vectors, a vectrix, etc. 
+\newcommand{\pspace}{\mathbb{P}} 
+\newcommand{\ura}[1]{{\underrightarrow{{#1}}}}
+\newcommand{\vectrix}[1]{\ensuremath \underrightarrow{\boldsymbol{\mathcal{F}}}_{#1}}
+\def\fdota{{\raisebox{-2pt}{\LARGE $\cdot$}}}
+\def\fdotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ$}}}}
+\def\fddota{{\raisebox{-2pt}{\LARGE $\cdot\hspace*{-0.2ex}\cdot$}}}
+\def\fddotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ\circ$}}}}
+\newcommand{\fdot}[1]{{^{\fdota{\mbox{\footnotesize${#1}$}}}}}
+\newcommand{\fddot}[1]{{^{\fddota{\mbox{\footnotesize${#1}$}}}}}
+
+
+% Short form for equations
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bdis}{\begin{displaymath}}
+\newcommand{\edis}{\end{displaymath}}
+\newcommand{\beqarray}{\begin{eqnarray}}
+\newcommand{\eeqarray}{\end{eqnarray}}
+\newcommand{\beqarraynn}{\begin{eqnarray*}}
+\newcommand{\eeqarraynn}{\end{eqnarray*}}
+
+%Must be equal to ...
+\newcommand{\mbeq}{\overset{!}{=}}
+
+% Matrices shortcut
+\newcommand{\crossop}[3]{\bma{ccc} 0 & -#3 & #2 \\ #3 & 0 & -#1 \\ -#2 & #1 & 0 \ema}
+\newcommand{\matr}[9]{\bma{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \ema}
+\newcommand{\matrr}[4]{\bma{cc} #1 & #2  \\ #3 & #4  \ema}
+\newcommand{\colvec}[3]{\bma{c} #1 \\ #2 \\ #3 \ema}
+\newcommand{\rowvec}[3]{\bma{ccc} #1 & #2 & #3 \ema}
+\newcommand{\colvecc}[2]{\bma{c} #1 \\ #2 \ema}
+\newcommand{\rowvecc}[2]{\bma{cc} #1 & #2 \ema}
+\newcommand{\Cone}[1]{\matr{1}{0}{0}{0}{\cos(#1)}{\sin(#1)}{0}{-\sin(#1)}{\cos(#1)}}
+\newcommand{\Ctwo}[1]{\matr{\cos(#1)}{0}{-\sin(#1)}{0}{1}{0}{\sin(#1)}{0}{\cos(#1)}}
+\newcommand{\Cthree}[1]{\matr{\cos(#1)}{\sin(#1)}{0}{-\sin(#1)}{\cos(#1)}{0}{0}{0}{1}}
+\newcommand{\uo}{\ura{\omega}}
+\newcommand{\ur}{\ura{r}}
+
+\newcommand*\dif{\mathop{}\!\mathrm{d}}
+\newcommand*\ex{\mathop{}\!\mathrm{ex}}
+\newcommand{\fbf}{\mbox{\textit{\textbf{f}}}}
+\newcommand{\ddt}{\frac{\dif}{\dif t}}
+
+\lhead{\footnotesize MECH 642\\Advanced Dynamics}
+\rhead{\footnotesize Assignment 5\\ Frédéric Berdoz, 260867318} %#
+
+\begin{document}
+
+\title{Assignment 5} %#
+\author{Frédéric Berdoz\\260867318}
+\date{}
+
+\maketitle
+
+% Question 1 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+\paragraph{a)}
+Step 1.1 is already done. Therefore, let's carry out steps 1.2 to 1.5.
+\begin{align*}
+\ura{\omega}^{ca}&=\ura{\omega}^{cb}+\ura{\omega}^{ba}
+\\ & = \vectrix{c}^\trans\mbf{1}_2\dot{\theta}+\vectrix{b}^\trans\mbf{1}_3\dot{\phi}
+\\ & = \vectrix{c}^\trans\left(\mbf{1}_2\dot{\theta}+\mbf{C}_{cb}\mbf{1}_3\dot{\phi}\right)
+\\ & = \vectrix{c}^\trans\colvec{-\sin(\theta)\dot{\phi}}{\dot{\theta}}{\cos(\theta)\dot{\phi}},
+\\
+{\mbs{\omega}_c^{ca}}^\times&=\matr{0}{-\cos(\theta)\dot{\phi}}{\dot{\theta}}
+{\cos(\theta)\dot{\phi}}{0}{\sin(\theta)\dot{\phi}}
+{-\dot{\theta}}{-\sin(\theta)\dot{\phi}}{0},
+\\
+\ura{r}^{pw}&=\vectrix{c}^\trans\colvec{0}{0}{l},
+\\
+\ura{v}^{pw/a}&={\ura{r}^{pw}}^\fdot{a}
+\\&=
+\underbrace{{\ura{r}^{pw}}^\fdot{c}}_{\ura{0}}+\ura{\omega}^{ca}\times\ura{r}^{pw}
+\\ & = 
+\vectrix{c}^\trans{\mbs{\omega}_c^{ca}}^\times\mbf{r}_c^{pw}
+\\ & =
+\vectrix{c}^\trans\matr{0}{-\cos(\theta)\dot{\phi}}{\dot{\theta}}
+{\cos(\theta)\dot{\phi}}{0}{\sin(\theta)\dot{\phi}}
+{-\dot{\theta}}{-\sin(\theta)\dot{\phi}}{0}\colvec{0}{0}{l}
+\\ & =
+\vectrix{c}^\trans\colvec{l\dot{\theta}}{l\sin(\theta)\dot{\phi}}{0}.
+\end{align*}
+Since we don't have constraints, we can now compute the different energies, i.e. steps 2.1 to 2.3:
+\begin{align*}
+T_{pw/a}&=\onehalf m \ura{v}^{pw/a}\cdot\ura{v}^{pw/a}
+\\ & =
+\onehalf m {\mbf{v}_c^{pw/a}}^\trans\mbf{v}_c^{pw/a}
+\\ & =
+\onehalf m \rowvec{l\dot{\theta}}{l\sin(\theta)\dot{\phi}}{0}\colvec{l\dot{\theta}}{l\sin(\theta)\dot{\phi}}{0}
+\\ & =
+\onehalf m l^2(\dot{\theta}^2+\sin^2(\theta)\dot{\phi}^2).
+\\
+U_{pw}&=-m\ura{g}\cdot\ura{r}^{pw}
+\\ & =
+-m\rowvec{0}{0}{-g}\colvec{l\cos(\phi)\sin(\theta)}{l\sin(\phi)\sin(\theta)}{l\cos(\theta)}
+\\ & =
+mgl\cos(\theta).
+\\ 
+L_{pw/a}& = T_{pw/a}-U_{pw}
+\\& = \onehalf m l^2(\dot{\theta}^2+\sin^2(\theta)\dot{\phi}^2)-mgl\cos(\theta).
+\end{align*}
+Since no external force is applied, we have 
+\beq
+\fbf\triangleq\colvecc{\mathsf{f}_{\phi}}{\mathsf{f}_{\theta}}=\colvecc{0}{0}.
+\label{eq:f}
+\eeq
+Applying steps 4.1 and 4.2, we get:
+\begin{align}
+\frac{\dif}{\dif t}\left(\frac{\partial L_{pw/a}}{\partial \dot{\mbf{q}}}\right) 
+& = 
+\ddt \left(\rowvecc
+{\frac{\partial L_{pw/a}}{\partial \dot{\phi}}}
+{\frac{\partial L_{pw/a}}{\partial \dot{\theta}}}\right)
+\nonumber \\ & =
+\ddt\left(\rowvecc{ml^2\sin^2(\theta)\dot{\phi}}{ml^2\dot{\theta}}\right)
+\nonumber \\ & =
+\rowvec{ml^2\left\{2\sin(\theta)\cos(\theta)\dot{\theta}\dot{\phi}+\sin^2(\theta)\ddot{\phi}\right\}}{ml^2\ddot{\theta}}
+\nonumber \\ & =
+\rowvecc{ml^2\left\{\sin(2\theta)\dot{\theta}\dot{\phi}+\sin^2(\theta)\ddot{\phi}\right\}}{ml^2\ddot{\theta}}, \label{eq:dLdt}
+\\
+\frac{\partial L_{pw/a}}{\partial \mbf{q}}& = 
+\rowvecc
+{\frac{\partial L_{pw/a}}{\partial \phi}}
+{\frac{\partial L_{pw/a}}{\partial \theta}}
+\nonumber \\ & =
+\rowvecc{0}{ml^2\dot{\phi}^2\sin(\theta)\cos(\theta)+mgl\sin(\theta)}
+\nonumber \\ & =
+\rowvecc{0}{\onehalf ml^2\dot{\phi}^2\sin(2\theta)+mgl\sin(\theta)}. \label{eq:dLdq}
+\end{align}
+
+
+Finally, since our generalized coordinates are unconstrained, we can apply the Lagrange's Equation for an Unconstrained Particle, i.e.
+\beq
+\frac{\dif}{\dif t}\left(\frac{\partial L_{pw/a}}{\partial \dot{\mbf{q}}}\right)^\trans-\left(\frac{\partial L_{pw/a}}{\partial \mbf{q}}\right)^\trans=\fbf.
+\label{eq:L}
+\eeq
+Substituting \eqref{eq:f}, \eqref{eq:dLdt} and \eqref{eq:dLdq} into \eqref{eq:L}, we obtain the following set of differential equations:
+\begin{align*}
+ml^2\left\{\sin(2\theta)\dot{\theta}\dot{\phi}+\sin^2(\theta)\ddot{\phi}\right\}&=0,
+\\
+ml^2\ddot{\theta}-\onehalf ml^2\dot{\phi}^2\sin(2\theta)-mgl\sin(\theta)&=0,
+\end{align*}
+which can be further simplified as follows:
+\begin{align*}
+\sin^2(\theta)\ddot{\phi}+\sin(2\theta)\dot{\theta}\dot{\phi}&=0,
+\\
+\ddot{\theta}-\onehalf \dot{\phi}^2\sin(2\theta)-\frac{g}{l}\sin(\theta)&=0.
+\end{align*}
+To verify partly this result, we can see that if we set $\dot{\phi}=\ddot{\phi}=0$ and if we use $\alpha=\pi-\theta$, we obtain the following differential equation:
+\bdis
+\ddot{\alpha}+\frac{g}{l}\sin(\alpha)=0,
+\edis
+which is the equation describing the motion of a simple gravity pendulum of length $l$.
+
+\paragraph{b)}
+Following the same procedure as in a):
+\begin{align*}
+\ura{r}^{pw}&=\vectrix{a}^\trans\colvec{x_a}{y_a}{\sqrt{\ell^2-x_a^2-y_a^2}},
+\\ 
+\ura{v}^{pw/a}&=\vectrix{a}^\trans\colvec{\dot{x}_a}{\dot{y}_a}{-\frac{x_a\dot{x}_a+y_a\dot{y}_a}{\sqrt{\ell^2-x_a^2-y_a^2}}},
+\\
+T_{pw/a}&=\onehalf m \ura{v}^{pw/a}\cdot\ura{v}^{pw/a}
+\\ & = \onehalf m\left(\dot{x}_a^2+\dot{y}_a^2+\frac{(x_a\dot{x}_a+y_a\dot{y}_a)^2}{\ell^2-x_a^2-y_a^2}\right),
+\\
+U_{pw}&=-m\ura{g}\cdot\ura{r}^{pw}
+\\ & = -m\rowvec{0}{0}{-g}\colvec{x_a}{y_a}{\sqrt{\ell^2-x_a^2-y_a^2}}
+\\ & =
+mg\sqrt{\ell^2-x_a^2-y_a^2},
+\\
+L_{pw/a} & = T_{pw/a}-U_{pw}
+\\ & =
+\onehalf m\left(\dot{x}_a^2+\dot{y}_a^2+\frac{(x_a\dot{x}_a+y_a\dot{y}_a)^2}{\ell^2-x_a^2-y_a^2}\right)-mg\sqrt{\ell^2-x_a^2-y_a^2},
+\\
+\fbf&\triangleq\colvecc{\mathsf{f}_{x_a}}{\mathsf{f}_{y_a}}=\colvecc{0}{0}.
+\end{align*}
+
+\begin{align*}
+\frac{\dif}{\dif t}\left(\frac{\partial L_{pw/a}}{\partial \dot{\mbf{q}}}\right) 
+& = 
+\ddt \left(\rowvecc
+{\frac{\partial L_{pw/a}}{\partial \dot{x_a}}}
+{\frac{\partial L_{pw/a}}{\partial \dot{y_a}}}\right)
+\\ & =
+\ddt \left(\rowvecc
+{\onehalf m\left\{2\dot{x}_a+2x_a\frac{x_a\dot{x}_a+y_a\dot{y}_a}{\ell^2-x_a^2-y_a^2}\right\}}
+{\onehalf m\left\{2\dot{y}_a+2y_a\frac{x_a\dot{x}_a+y_a\dot{y}_a}{\ell^2-x_a^2-y_a^2}\right\}}
+\right)
+\\ & =
+m \colvecc
+{\ddot{x}_a+
+\frac{2x_a\dot{x}_a^2+\dot{x}_a\dot{y}_ay_a+x_a^2\ddot{x}_a+x_a\dot{y}_a^2+x_ay_a\ddot{y}_a}{\ell^2-x_a^2-y_a^2}+2x_a\frac{(x_a\dot{x}_a+y_a\dot{y}_a)^2}{(\ell^2-x_a^2-y_a^2)^2}
+}
+{\ddot{y}_a+
+\frac{2y_a\dot{y}_a^2+\dot{y}_a\dot{x}_ax_a+y_a^2\ddot{y}_a+y_a\dot{x}_a^2+y_ax_a\ddot{x}_a}{\ell^2-x_a^2-y_a^2}+2y_a\frac{(x_a\dot{x}_a+y_a\dot{y}_a)^2}{(\ell^2-x_a^2-y_a^2)^2}
+}^\trans,
+\\
+\frac{\partial L_{pw/a}}{\partial \mbf{q}}& = 
+\rowvecc
+{\frac{\partial L_{pw/a}}{\partial x_a}}
+{\frac{\partial L_{pw/a}}{\partial y_a}}
+\\ & =
+m \colvecc
+{\frac{gx_a}{\sqrt{\ell^2-x_a^2-y_a^2}}+\dot{x}_a\frac{x_a\dot{x}_a+y_a\dot{y}_a}{\ell^2-x_a^2-y_a^2}+x_a\frac{(x_a\dot{x}_a+y_a\dot{y}_a)^2}{(\ell^2-x_a^2-y_a^2)^2}}
+{\frac{gy_a}{\sqrt{\ell^2-x_a^2-y_a^2}}+\dot{y}_a\frac{x_a\dot{x}_a+y_a\dot{y}_a}{\ell^2-x_a^2-y_a^2}+y_a\frac{(x_a\dot{x}_a+y_a\dot{y}_a)^2}{(\ell^2-x_a^2-y_a^2)^2}}^\trans.
+\end{align*}
+Finally, substituting everything into \eqref{eq:L} and rearranging:
+\begin{align*}
+\ddot{x}_a+
+\frac{x_a\dot{x}_a^2+x_a^2\ddot{x}_a+x_a\dot{y}_a^2+x_ay_a\ddot{y}_a}{\ell^2-x_a^2-y_a^2}+x_a\frac{(x_a\dot{x}_a+y_a\dot{y}_a)^2}{(\ell^2-x_a^2-y_a^2)^2}-\frac{gx_a}{\sqrt{\ell^2-y_a^2-y_a^2}}&=0,
+\\
+\ddot{y}_a+
+\frac{y_a\dot{y}_a^2+y_a^2\ddot{y}_a+y_a\dot{x}_a^2+y_ax_a\ddot{x}_a}{\ell^2-x_a^2-y_a^2}+y_a\frac{(x_a\dot{x}_a+y_a\dot{y}_a)^2}{(\ell^2-x_a^2-y_a^2)^2}-\frac{gy_a}{\sqrt{\ell^2-y_a^2-y_a^2}}&=0.
+\end{align*}
+
+\paragraph{c)}
+As in a) and b):
+\begin{align*}
+\ura{r}^{pw}&=\vectrix{a}^\trans\colvec{x_a}{y_a}{z_a},
+\\ 
+\ura{v}^{pw/a}&=\vectrix{a}^\trans\colvec{\dot{x}_a}{\dot{y}_a}{\dot{z}_a},
+\\
+T_{pw/a}&=\onehalf m \ura{v}^{pw/a}\cdot\ura{v}^{pw/a} = \onehalf m\left(\dot{x}_a^2+\dot{y}_a^2+\dot{z}_a^2\right),
+\\
+U_{pw}&=-m\ura{g}\cdot\ura{r}^{pw}= -m\rowvec{0}{0}{-g}\colvec{x_a}{y_a}{z_a} = mgz_a,
+\\
+L_{pw/a} & = T_{pw/a}-U_{pw}=\onehalf m\left(\dot{x}_a^2+\dot{y}_a^2+\dot{z}_a^2\right)-mgz_a,
+\\
+\fbf&\triangleq\colvec{\mathsf{f}_{x_a}}{\mathsf{f}_{y_a}}{\mathsf{f}_{z_a}}=\colvec{0}{0}{0}.
+\\
+\frac{\dif}{\dif t}\left(\frac{\partial L_{pw/a}}{\partial \dot{\mbf{q}}}\right)&=
+\ddt \left(\rowvec
+{\frac{\partial L_{pw/a}}{\partial \dot{x}_a}}
+{\frac{\partial L_{pw/a}}{\partial \dot{y}_a}}
+{\frac{\partial L_{pw/a}}{\partial \dot{z}_a}}
+\right)
+ = \rowvec{m\ddot{x}_a}{m\ddot{y}_a}{m\ddot{z}_a},
+ \\
+ \frac{\partial L_{pw/a}}{\partial \mbf{q}}& = 
+\rowvec
+{\frac{\partial L_{pw/a}}{\partial x_a}}
+{\frac{\partial L_{pw/a}}{\partial y_a}}
+{\frac{\partial L_{pw/a}}{\partial z_a}}
+=
+\rowvec{0}{0}{-mg}.
+\end{align*}
+However, we know have a holonomic constraint:
+\bdis
+\phi(\mbf{q})=\mbf{q}^\trans\mbf{q}-\ell^2=x_a^2+y_a^2+z_a^2-\ell^2=0.
+\edis
+Defining the quantities
+\begin{align*}
+\mbs{\Xi}_{\,}&\triangleq\rowvec{\frac{\partial \phi(\mbf{q})}{\partial x_a}}{\frac{\partial \phi(\mbf{q})}{\partial y_a}}{\frac{\partial \phi(\mbf{q})}{\partial z_a}}=\rowvec{2x_a}{2y_a}{2z_a},
+\\
+\Xi_t&\triangleq {\frac{\partial \phi(\mbf{q})}{\partial t}}=0,
+\end{align*}
+we can write the rate form of the constraint as follows:
+\begin{align}
+\mbs{\Xi}\dot{\mbf{q}}+\Xi_t=2x_a\dot{x}_a+2y_a\dot{y}_a+2z_a\dot{z}_a=0. \label{eq:de4}
+\end{align}
+This gives us the first differential equation of motion. To get the others, we apply the Lagrange's Equation for a Constraint System of Particles ($\lambda$ is a scalar since we only have 1 contraint):
+\beq
+\frac{\dif}{\dif t}\left(\frac{\partial L_{pw/a}}{\partial \dot{\mbf{q}}}\right)^\trans-\left(\frac{\partial L_{pw/a}}{\partial \mbf{q}}\right)^\trans=\fbf+\lambda \mbs{\Xi}^\trans.
+\label{eq:LC}
+\eeq
+After substitution, we obtain three additional differential equations:
+\begin{align}
+m\ddot{x}_a&=2\lambda x_a, \label{eq:ddx}
+\\
+m\ddot{y}_a&=2\lambda y_a, \label{eq:ddy}
+\\
+m\ddot{z}_a+mg&=2\lambda z_a. \label{eq:ddz}
+\end{align}
+Together, \eqref{eq:ddx}, \eqref{eq:ddy}, \eqref{eq:ddz} and \eqref{eq:de4} describe the motion of $p$.
+\subsection*{(i)}
+Equations  \eqref{eq:ddx}, \eqref{eq:ddy} and \eqref{eq:ddz} can be rewritten in matrix form:
+\beq
+\mbf{M}\ddot{\mbf{q}}-\lambda\mbs{\Xi}^\trans=\mbf{f}_{\mbox{\footnotesize{non}}},
+\label{eq:matr1}
+\eeq
+where
+\bdis
+\mbf{M}=m\mbf{1},\qquad \mbs{\Xi}^\trans =\colvec{2x_a}{2y_a}{2z_a}, \qquad \mbf{f}_{\mbox{\footnotesize{non}}}=\colvec{0}{0}{-mg}.
+\edis
+Moreover, taking the time derivative of \eqref{eq:de4},
+\beq
+\mbs{\Xi}\ddot{\mbf{q}}+\dot{\mbs{\Xi}}\mbf{q}+\dot{\Xi}_t=\mbf{0}.
+\label{eq:matr2}
+\eeq
+
+We can combine \eqref{eq:matr1} and \eqref{eq:matr2} in matrix form to obtain
+\bdis
+\matrr{\mbf{M}}{-\mbs{\Xi}^\trans}{-\mbs{\Xi}}{\mbf{0}}\colvecc{\ddot{\mbf{q}}}{\lambda}=\colvecc{\mbf{f}_{\mbox{\footnotesize{non}}}}{\dot{\mbs{\Xi}}\mbf{q}+\dot{\Xi}_t}.
+\edis
+I can be shown that the left-hand side matrix is nonsingular, and therefore the equation can be solved for $\rowvecc{\ddot{\mbf{q}}}{\lambda}^\trans$:
+\bdis
+\colvecc{\ddot{\mbf{q}}}{\lambda}=\matrr{\mbf{M}}{-\mbs{\Xi}^\trans}{-\mbs{\Xi}}{\mbf{0}}^{-1}\colvecc{\mbf{f}_{\mbox{\footnotesize{non}}}}{\dot{\mbs{\Xi}}\mbf{q}+\dot{\Xi}_t}\triangleq\colvecc{\mbf{f}_{\ddot{\mbf{q}}}(\mbf{q},\dot{\mbf{q}})}{\mathsf{f}_{\lambda}(\mbf{q},\dot{\mbf{q}})}.
+\edis
+This gives us a direct equation for the Lagrange multiplier $\lambda$. Plus, in order to solve for $\mbf{q}$ versus time, we can numerically integrate the equation
+\bdis
+\dot{\mbf{x}}=\mbf{f}(\mbf{x}),
+\edis
+where
+\bdis
+\mbf{x}\triangleq\colvecc{\mbf{q}}{\dot{\mbf{q}}},
+\qquad
+\mbf{f}(\mbf{x})\triangleq\colvecc{\dot{\mbf{q}}}{\mbf{f}_{\ddot{\mbf{q}}}(\mbf{q},\dot{\mbf{q}})}.
+\edis
+\subsection*{(ii)}
+Writing 
+\bdis
+\colvec{x_a}{y_a}{z_a}=\colvec{l\cos(\phi)\sin(\theta)}{l\sin(\phi)\sin(\theta)}{l\cos(\theta)}
+\edis
+and taking the time derivative on both sides, we obtain the following:
+\begin{align}
+\dot{\mbf{q}}&=\colvec{\dot{x}_a}{\dot{y}_a}{\dot{z}_a}
+\nonumber \\ & =
+\colvec
+{l\{\cos(\phi)\cos(\theta)\dot{\theta}-\sin(\phi)\sin(\theta)\dot{\phi}\}}
+{l\{\sin(\phi)\cos(\theta)\dot{\theta}+\cos(\phi)\sin(\theta)\dot{\phi}\}}
+{-l\sin(\theta)\dot{\theta}}
+\nonumber \\ & =
+\underbrace{\matr
+{-l\sin(\phi)\sin(\theta)}{l\cos(\phi)\cos(\theta)}{}
+{l\cos(\phi)\sin(\theta)}{l\sin(\phi)\cos(\theta)}{}
+{0}{-l\sin(\theta)}{}}_{\mbs{\Upsilon}}
+\underbrace{\colvecc{\dot{\phi}}{\dot{\theta}}}_{\dot{\hat{\mbf{q}}}}.
+\label{eq:upsilon}
+\end{align}
+Using this definition, we have
+\bdis
+\dot{\mbs{\Upsilon}}=\matr
+{-l\{\cos(\phi)\sin(\theta)\dot{\phi}+\cos(\theta)\sin(\phi)\dot{\theta}\}}
+{-l\{\cos(\theta)\sin(\phi)\dot{\phi}+\cos(\phi)\sin(\theta)\dot{\theta}\}}{}
+{l\{-\sin(\phi)\sin(\theta)\dot{\phi}+\cos(\phi)\cos(\theta)\dot{\theta}\}}
+{l\{\cos(\phi)\cos(\theta)\dot{\phi}-\sin(\phi)\sin(\theta)\dot{\theta}\}}{}
+{0}
+{-l\cos(\theta)\dot{\theta}}{}.
+\label{eq:dupsilondt}
+\edis
+Substituting \eqref{eq:upsilon} into \eqref{eq:matr1} and premultiplying by $\mbs{\Upsilon}^\trans$, it yields
+\beq
+\mbs{\Upsilon}^\trans\mbf{M}\mbs{\Upsilon}\ddot{\hat{\mbf{q}}}+\mbs{\Upsilon}^\trans\mbf{M}\dot{\mbs{\Upsilon}}\dot{\hat{\mbf{q}}}=\mbs{\Upsilon}^\trans\mbf{f}_{\mbox{\footnotesize{non}}},
+\label{eq:matr3}
+\eeq
+where we used the fact that $\mbs{\Upsilon}^\trans\mbs{\Xi}^\trans=\mbf{0}$.
+Developing \eqref{eq:matr3} and simplifying, we get
+\bdis
+\matrr{ml^2\sin^2(\theta)}{0}{0}{ml^2}\colvecc{\ddot{\phi}}{\ddot{\theta}}+\matrr{ml^2\sin(\theta)\cos(\theta)\dot{\theta}}{ml^2\sin(\theta)\cos(\theta)\dot{\phi}}{-ml^2\sin(\theta)\cos(\theta)\dot{\phi}}{0}\colvecc{\dot{\phi}}{\dot{\theta}}=\colvecc{0}{mgl\sin(\theta)}.
+\edis
+Using the trigonometric identity $\sin(x)\cos(x)=\onehalf \sin(2x)$ and dividing on both side by $ml^2$, we obtain the same two differential equations as in a):
+\begin{align*}
+\sin^2(\theta)\ddot{\phi}+\sin(2\theta)\dot{\theta}\dot{\phi}&=0,
+\\
+\ddot{\theta}-\onehalf \dot{\phi}^2\sin(2\theta)-\frac{g}{l}\sin(\theta)&=0.
+\end{align*}
+% Question 2 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+\paragraph*{a)}
+First, the DCM and the angular velocity between $\mathcal{F}_a$ and $\mathcal{F}_b$ are given by:
+\begin{align*}
+\mbf{C}_{ba}=\mbf{C}_{bq}\mbf{C}_{qa}=\mbf{C}_2(\theta)\mbf{C}_3(\gamma)&=\Ctwo{\theta}\Cthree{\gamma}
+\\ & =\matr{\cos(\theta)\cos(\gamma)}{\cos(\theta)\sin(\gamma)}{-\sin(\theta)}{-\sin(\gamma)}{\cos(\gamma)}{0}{\sin(\theta)\cos(\gamma)}{\sin(\theta)\sin(\gamma)}{\cos(\theta)},
+\\
+\\
+\ura{\omega}^{ba}=\ura{\omega}^{bq}+\ura{\omega}^{qa}&=\vectrix{b}\mbf{1}_2\dot{\theta}+\vectrix{a}\mbf{1}_3\dot{\gamma}
+\\ & =
+\vectrix{b}\left(\mbf{1}_2\dot{\theta}+\mbf{C}_{ba}\mbf{1}_3\dot{\gamma}\right)
+\\ & =
+\vectrix{b}\colvec{-\dot{\gamma}\sin(\theta)}{\dot{\theta}}{\dot{\gamma}\cos(\theta)}.
+\end{align*}
+Next,
+\begin{align*}
+\ura{r}^{pw}&=\ura{r}^{pc}+\ura{r}^{cw}
+\\ & =
+\vectrix{b}\mbf{1}_3r+\vectrix{a}\mbf{r}_a^{cw}, 
+\\
+\ura{v}^{pw/a}={\ura{r}^{pw}}^\fdot{a}&={\ura{r}^{pc}}^\fdot{a}+\underbrace{{\ura{r}^{cw}}^\fdot{a}}_{\ura{0}} =\underbrace{{\ura{r}^{pc}}^\fdot{b}}_{\ura{0}}+\uo^{ba}\times\ur^{pc}
+\\ & =
+\vectrix{b}\left({\mbs{\omega}_b^{ba}}^\times\mbf{r}_b^{pc}\right)
+\\ & =
+\vectrix{b}\colvec{\dot{\theta}r}{r\dot{\gamma}\sin(\theta)}{0}.
+\end{align*}
+The kinetic  and potential energy become
+\begin{align*}
+T_{pw/a}&=\onehalf m \ura{v}^{pw/a}\cdot\ura{v}^{pw/a}
+\\ & = 
+\onehalf m {\mbf{v}_b^{pw/a}}^\trans\mbf{v}_b^{pw/a}
+\\ & = 
+\onehalf m \rowvec{\dot{\theta}r}{r\dot{\gamma}\sin(\theta)}{0}\colvec{\dot{\theta}r}{r\dot{\gamma}\sin(\theta)}{0}
+\\ & =
+\onehalf m \left(\dot{\theta}^2r^2+r^2\dot{\gamma}^2\sin^2(\theta)\right)
+\\ & = 
+\onehalf \underbrace{\rowvecc{\dot{\theta}}{\dot{\gamma}}}_{\dot{\mbf{q}}^\trans}\underbrace{\matrr{mr^2}{0}{0}{mr^2\sin^2(\theta)}}_{\mbf{M}(\mbf{q})}\underbrace{\colvecc{\dot{\theta}}{\dot{\gamma}}}_{\dot{\mbf{q}}}.
+\\
+\\
+U_{pw}&=-m\ura{g}\cdot\ur^{pw}
+\\ & =
+mg\left(\mbf{C}_{ba}\mbf{1}_3\right)^\trans\left(\mbf{r}_b^{pc}+\mbf{C}_{ba}\mbf{r}_a^{cw}\right)
+\\ & = 
+mg\left(\mbf{1}_3^\trans\mbf{C}_{ba}^\trans\mbf{r}_b^{pc}+\mbf{1}_3^\trans\mbf{C}_{ba}^\trans\mbf{C}_{ba}\mbf{r}_a^{cw}\right)
+\\ & =
+mg\left(r\mbf{1}_3^\trans\mbf{C}_{ba}^\trans\mbf{1}_3+\mbf{1}_3^\trans\mbf{r}_a^{cw}\right)
+\\ & =
+mgr\cos(\theta)+mg\mbf{1}_3^\trans\mbf{r}_a^{cw}.
+\end{align*}
+And finally,
+\begin{align*}
+L_{pw/a}=T_{pw/a}-U_{pw}=\onehalf m \left(\dot{\theta}^2r^2+r^2\dot{\gamma}^2\sin^2(\theta)\right)-mgr\cos(\theta)-mg\mbf{1}_3^\trans\mbf{r}_a^{cw}.
+\end{align*}
+
+\paragraph*{b)}
+\begin{align}
+\frac{\dif }{\dif t}\left(\frac{\partial L_{pw/a}}{\partial \dot{\mbf{q}}}\right) 
+& =
+\frac{\dif }{\dif t} \left(\frac{\partial T_{pw/a}}{\partial \dot{\mbf{q}}} \right) 
+\nonumber \\ & =
+\frac{\dif }{\dif t} \left( \dot{\mbf{q}}^\trans\mbf{M}(\mbf{q})\right)
+ \nonumber\\ & =
+\frac{\dif }{\dif t} \left( \rowvecc{mr^2\dot{\theta}}{mr^2\dot{\gamma}\sin^2(\theta)}\right)
+ \nonumber\\ & =
+\rowvecc{mr^2\ddot{\theta}}{mr^2(\ddot{\gamma}\sin^2(\theta)+2\dot{\gamma}\sin(\theta)\cos(\theta)\dot{\theta})},
+\label{eq:L1}
+\\
+\nonumber \\
+\frac{\partial L_{pw/a}}{\partial \mbf{q}}
+& =
+\rowvecc{mr^2\dot{\gamma}^2\sin(\theta)\cos(\theta)+mgr\sin(\theta)}{0}.
+\label{eq:L2}
+\end{align}
+Since the generalized coordinates are not constrained and no external forces is applied on the particle, the Lagrange's Equation can be written as follows:
+\beq
+\frac{\dif }{\dif t}\left(\frac{\partial L_{pw/a}}{\partial \dot{\mbf{q}}}\right)^\trans-\frac{\partial L_{pw/a}}{\partial \mbf{q}}^\trans=\mbf{0}.
+\label{eq:LE2}
+\eeq
+Substituting \eqref{eq:L1} and \eqref{eq:L2} into \eqref{eq:LE2}, we obtain
+\bdis
+\colvecc{mr^2\ddot{\theta}-mr^2\dot{\gamma}^2\sin(\theta)\cos(\theta)-mgr\sin(\theta)}{mr^2(\ddot{\gamma}\sin^2(\theta)+2\dot{\gamma}\sin(\theta)\cos(\theta)\dot{\theta})}=\colvecc{0}{0},
+\edis
+which can be rewritten as follows
+\bdis
+\underbrace{\matrr{mr^2}{0}{0}{mr^2\sin^2(\theta)}}_{\mbf{M}(\mbf{q})}\underbrace{\colvecc{\ddot{\theta}}{\ddot{\gamma}}}_{\ddot{\mbf{q}}}=\underbrace{\colvecc{\onehalf mr^2\dot{\gamma}^2\sin(2\theta)+mgr\sin(\theta)}{-mr^2\dot{\gamma}\dot{\theta}\sin(2\theta)}}_{\mbf{f}_{non}(\mbf{q},\dot{\mbf{q}})}
+\edis
+
+\paragraph*{c)}
+Let's define $\mbf{x}$ as follows:
+\bdis
+\mbf{x}=\colvecc{\mbf{q}}{\dot{\mbf{q}}}, \qquad \dot{\mbf{x}}=\colvecc{\dot{\mbf{q}}}{\ddot{\mbf{q}}}
+\edis
+so that we can describe the particle's motion with the following first order DE: 
+\bdis
+\dot{\mbf{x}}=\mbf{f}(\mbf{x}), \qquad \mbf{f}(\mbf{q},\dot{\mbf{q}})=\colvecc{\dot{\mbf{q}}}{\mbf{M}^{-1}(\mbf{q})\mbf{f}_{non}(\mbf{q},\dot{\mbf{q}})}
+\edis
+See the following \textsc{Matlab}{} code for the numerical integration and the verification. The mechanical energy of the system should remain constant (neglecting the numerical errors). 
+\end{document}
+
+

@@ -1,0 +1,381 @@
+\documentclass[11pt, oneside]{article}  	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{a4paper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+\usepackage[parfill]{parskip}    			% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+
+\graphicspath{ {images/} }
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage[latin1]{inputenc} 
+
+% Prof. Forbes math packages
+\usepackage{amsmath} % cmex10
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+
+% Matrix command
+\newcommand{\bma}[1]{\left[\begin{array}{#1}}
+\newcommand{\ema}{\end{array}\right]}
+\newcommand{\trans}{{\ensuremath{\mathsf{T}}}} % transpose
+\newcommand{\utimes}{ {\raisebox{-0.6ex}{ \kern-1.0ex\raisebox{0.6ex}{ \small $\mathsf{v}$}}} } % 
+\newcommand{\onehalf}{\mbox{$\textstyle{\frac{1}{2}}$}}
+
+
+% Bold symbols
+\DeclareMathAlphabet{\mbf}{OT1}{ptm}{b}{n} % for bold face Roman
+\newcommand{\mbs}[1]{{\boldsymbol{#1}}} % for bold face Greek
+
+% Other bold symbols 
+\newcommand{\mbfbar}[1]{{\bar{\mbf{#1}}}}
+\newcommand{\mbfhat}[1]{{\hat{\mbf{#1}}}}
+\newcommand{\mbftilde}[1]{{\tilde{\mbf{#1}}}}
+\newcommand{\mbsbar}[1]{{\bar{\boldsymbol{#1}}}}
+\newcommand{\mbshat}[1]{{\hat{\boldsymbol{#1}}}}
+\newcommand{\mbstilde}[1]{{\tilde{\boldsymbol{#1}}}}
+
+% Physical Space, physical vectors, a vectrix, etc. 
+\newcommand{\pspace}{\mathbb{P}} 
+\newcommand{\ura}[1]{{\underrightarrow{{#1}}}}
+\newcommand{\vectrix}[1]{\ensuremath \underrightarrow{\boldsymbol{\mathcal{F}}}_{#1}}
+\def\fdota{{\raisebox{-2pt}{\LARGE $\cdot$}}}
+\def\fdotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ$}}}}
+\def\fddota{{\raisebox{-2pt}{\LARGE $\cdot\hspace*{-0.2ex}\cdot$}}}
+\def\fddotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ\circ$}}}}
+\newcommand{\fdot}[1]{{^{\fdota{\mbox{\footnotesize${#1}$}}}}}
+\newcommand{\fddot}[1]{{^{\fddota{\mbox{\footnotesize${#1}$}}}}}
+
+
+% Short form for equations
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bdis}{\begin{displaymath}}
+\newcommand{\edis}{\end{displaymath}}
+\newcommand{\beqarray}{\begin{eqnarray}}
+\newcommand{\eeqarray}{\end{eqnarray}}
+\newcommand{\beqarraynn}{\begin{eqnarray*}}
+\newcommand{\eeqarraynn}{\end{eqnarray*}}
+
+%Must be equal to ...
+\newcommand{\mbeq}{\overset{!}{=}}
+
+% Matrices shortcut
+\newcommand{\crossop}[3]{\bma{ccc} 0 & -#3 & #2 \\ #3 & 0 & -#1 \\ -#2 & #1 & 0 \ema}
+\newcommand{\matr}[9]{\bma{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \ema}
+\newcommand{\colvec}[3]{\bma{c} #1 \\ #2 \\ #3 \ema}
+\newcommand{\rowvec}[3]{\bma{ccc} #1 & #2 & #3 \ema}
+\newcommand{\Cone}[1]{\matr{1}{0}{0}{0}{\cos(#1)}{\sin(#1)}{0}{-\sin(#1)}{\cos(#1)}}
+\newcommand{\Ctwo}[1]{\matr{\cos(#1)}{\sin(#1)}{0}{-\sin(#1)}{\cos(#1)}{0}{0}{0}{1}}
+\newcommand{\Cthree}[1]{\matr{\cos(#1)}{\sin(#1)}{0}{-\sin(#1)}{\cos(#1)}{0}{0}{0}{1}}
+
+\lhead{\footnotesize MECH 642\\Advanced Dynamics}
+\rhead{\footnotesize Assignment 3\\ Frédéric Berdoz, 260867318} %#
+
+\begin{document}
+
+\title{Assignment 3} %#
+\author{Frédéric Berdoz\\260867318}
+\date{}
+
+\maketitle
+
+% Question 1 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+\paragraph{a)} First, let's consider the reference frames $\mathcal{F}_a$ and $\mathcal{F}_b$ such that $\mbf{C}_{ba}=\vectrix{b}\cdot\vectrix{a}^\trans$. Moreover, let's consider the intermediate reference frames $\mathcal{F}_k$ and $\mathcal{F}_l$ such that:
+\begin{align*}
+\mbf{C}_{ka}&=\vectrix{k}\cdot\vectrix{a}^\trans=\mbf{C}_2(\alpha),&\ura{a}^2=\ura{k}^2 \\
+\mbf{C}_{lk}&=\vectrix{l}\cdot\vectrix{k}^\trans=\mbf{C}_1(\beta),& \ura{k}^1=\ura{l}^1\\
+\mbf{C}_{bl}&=\vectrix{b}\cdot\vectrix{l}^\trans=\mbf{C}_3(\gamma),&\ura{l}^3=\ura{b}^3
+\end{align*}
+Now, from the definition of the Euler angles, we can find the Angular Velocities between these successive reference frames. In particular, we recall that the Angular Velocity physical vector between two reference frames, say $\mathcal{F}_x$ and $\mathcal{F}_y$, is resolved identically in frames $\mathcal{F}_x$ and $\mathcal{F}_y$. Plus, it is simply the multiplication between the angular time derivative and the unit physical vector (resolved in frame $\mathcal{F}_x$ or $\mathcal{F}_y$) about which the rotation occurs.
+
+In our case, $\mathcal{F}_k$ rotates relative to $\mathcal{F}_a$ about the physical vector $\ura{a}^2$, at an angular time rate of change of $\dot{\alpha}$. Since $\ura{a}^2$ resolved in frame $\mathcal{F}_a$ is simply $\mbf{1}_2$, we have:
+\begin{align*}
+\mbs{\omega}_a^{ka}&=\mbs{\omega}_k^{ka}=\dot{\alpha}\mbf{1}_2=\rowvec{0}{\dot{\alpha}}{0}^\trans
+\end{align*}
+Similarly for $\ura{\omega}^{lk}$ and $\ura{\omega}^{bl}$:
+\begin{align*}
+\mbs{\omega}_k^{lk}&=\mbs{\omega}_l^{lk}=\dot{\beta}\mbf{1}_1=\rowvec{\dot{\beta}}{0}{0}^\trans \\
+\mbs{\omega}_l^{bl}&=\mbs{\omega}_b^{bl}=\dot{\gamma}\mbf{1}_3=\rowvec{0}{0}{\dot{\gamma}}^\trans \\
+\end{align*}
+Using the facts that the  Angular Velocity physical vectors add, it yields:
+$$
+\ura{\omega}^{ba}=\ura{\omega}^{bl}+\ura{\omega}^{lk}+\ura{\omega}^{ka}
+$$
+Therefore:
+\begin{align*}
+\vectrix{b}^\trans\mbs{\omega}_b^{ba}
+& =
+\vectrix{b}^\trans\mbs{\omega}_b^{bl}+\vectrix{l}^\trans\mbs{\omega}_l^{lk}+\vectrix{k}^\trans\mbs{\omega}_k^{ka}
+\\ & =
+\vectrix{b}^\trans\mbs{\omega}_b^{bl}+\vectrix{b}^\trans\mbf{C}_{bl}\mbs{\omega}_l^{lk}+\vectrix{b}^\trans\mbf{C}_{bl}\mbf{C}_{lk}\mbs{\omega}_k^{ka}
+\\ & =
+\vectrix{b}^\trans\left(\mbs{\omega}_b^{bl}+\mbf{C}_3(\gamma)\mbs{\omega}_l^{lk}+\mbf{C}_3(\gamma)\mbf{C}_1(\beta)\mbs{\omega}_k^{ka}\right)
+\\ & =
+\vectrix{b}^\trans\underbrace{\left(\dot{\gamma}\mbf{1}_3+\mbf{C}_3(\gamma)\dot{\beta}\mbf{1}_1+\mbf{C}_3(\gamma)\mbf{C}_1(\beta)\dot{\alpha}\mbf{1}_2\right)}_{\mbs{\omega}_b^{ba}}
+\end{align*}
+And finally:
+$$
+\mbs{\omega}_b^{ba}=\underbrace{\rowvec{\mbf{C}_3(\gamma)\mbf{C}_1(\beta)\mbf{1}_2}{\mbf{C}_3(\gamma)\mbf{1}_1}{\mbf{1}_3}}_{\mbf{S}_b^{ba}(\gamma,\beta)} \underbrace{\colvec{\dot{\alpha}}{\dot{\beta}}{\dot{\gamma}}}_{\dot{\mbs{\theta}}}
+$$
+Componentwise:
+\begin{align*}
+\mbf{C}_3(\gamma)\mbf{C}_1(\beta)\mbf{1}_2
+& =
+\Cthree{\gamma}\Cone{\beta}\colvec{0}{1}{0}
+\\ & =
+\Cthree{\gamma}\colvec{0}{\cos(\beta)}{-\sin(\beta)}
+\\ & =
+\colvec{\sin(\gamma)\cos(\beta)}{\cos(\gamma)\cos(\beta)}{-\sin(\beta)}
+\\ \\
+\mbf{C}_3(\gamma)\mbf{1}_1
+& =
+\Cthree{\gamma}\colvec{1}{0}{0}=\colvec{\cos(\gamma)}{-\sin(\gamma)}{0}
+\\ \\
+\mbf{S}_b^{ba}(\gamma,\beta)
+& =
+\matr{\sin(\gamma)\cos(\beta)}{\cos(\gamma)}{0}{\cos(\gamma)\cos(\beta)}{-\sin(\gamma)}{0}{-\sin(\beta)}{0}{1}
+\end{align*}
+
+
+\paragraph{b)}
+$\mbf{S}_b^{ba}(\gamma,\beta)$ is singular if and only if det$\left(\mbf{S}_b^{ba}(\gamma,\beta)\right)=0$.
+$$
+\mbox{det}\left(\mbf{S}_b^{ba}(\gamma,\beta)\right)=-\sin^2(\gamma)\cos(\beta)-\cos^2(\gamma)\cos(\beta)=-\cos(\beta)
+$$
+Therefore, $\mbf{S}_b^{ba}(\gamma,\beta)$ is singular for $\beta=\beta_k^*=\frac{\pi}{2}+k\pi,\quad k\in\mathbb{Z}$.
+
+Since $\mbf{S}_b^{ba}(\gamma,\beta_k^*)$ is not invertible, the equation $\mbs{\omega}_b^{ba}=\mbf{S}_b^{ba}(\gamma,\beta_k^*)\dot{\mbs{\theta}}$ cannot be solved for $\dot{\mbs{\theta}}$.
+
+\paragraph{c)}
+For $\beta=\beta_k^*$, we have:
+$$
+\mbf{S}_b^{ba}(\gamma,\beta_k^*)=\matr{0}{\cos(\gamma)}{0}{0}{-\sin(\gamma)}{0}{(-1)^{k+1}}{0}{1}
+$$
+We want to find a $3\times1$ column matrix $\mbf{n}=\rowvec{n_1}{n_2}{n_3}^\trans$ such that:
+$$
+\mbf{S}_b^{ba}(\gamma,\beta_k^*)\mbf{n}=\mbf{0} \quad \Leftrightarrow \matr{0}{\cos(\gamma)}{0}{0}{-\sin(\gamma)}{0}{(-1)^{k+1}}{0}{1}\colvec{n_1}{n_2}{n_3}=\colvec{0}{0}{0},\quad \forall \gamma \in \mathbb{R}
+$$
+By inspection, $n_1=c$, $n_2=0$ and $n_3=(-1)^kc$, $c\in\mathbb{R}$. Thus, the solutions for $\mbf{n}$ create a one-dimensional subspace of $\mathbb{R}^3$ which is spanned by $\rowvec{1}{0}{(-1)^k}^\trans$. This subspace is the null space of $\mbf{S}_b^{ba}(\gamma,\beta_k^*)$, also written as  $\mathcal{N}\left(\mbf{S}_b^{ba}(\gamma,\beta_k^*)\right)$.
+
+\paragraph{d)}
+For $\dot{\mbs{\theta}}\in\mathcal{N}\left(\mbf{S}_b^{ba}(\gamma,\beta_k^*)\right)$, $\mbs{\omega}_b^{ba}=\mbf{S}_b^{ba}(\gamma,\beta_k^*)\dot{\mbs{\theta}}=\mbf{0}$. Physically, this means that the reference frames $\mathcal{F}_a$ and $\mathcal{F}_b$ are not rotating relative to each other. This comes from the fact that the Euler angle rates cancel themselves. 
+
+In particular, for $k=0$, we have $\beta_0^*=\frac{\pi}{2}$ and $\ura{a}^2=-\ura{b}^3$. If additionally $\dot{\mbs{\theta}}$ is in the null space of $\mbf{S}_b^{ba}(\gamma,\beta_k^*)$, it yields $\dot{\alpha}=\dot{\gamma}$ and the rotation at the rate $\dot{\alpha}$ about $\ura{a}^2$ is cancelled by the rotation at the rate $\dot{\gamma}=\dot{\alpha}$ about $\ura{b}^3=-\ura{a}^2$. Lastly, this cancellation will persist in time since $\dot{\beta}=0\quad(\beta(t)=\beta_0^*=\frac{\pi}{2} \quad \forall t)$. The same reasoning can be done for $k\neq0$.
+% Question 2 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+\beq
+\dot{\mbf{a}}=\frac{1}{2}\left[\mbf{a}^\times-\cot\left(\frac{\phi}{2}\right)\mbf{a}^\times\mbf{a}^\times\right]\mbs{\omega}_b^{ba}
+\label{eq:1}
+\eeq
+\beq
+\dot{\phi}
+\label{eq:2}=\mbf{a}^\trans\mbs{\omega}_b^{ba}
+\eeq
+
+\paragraph{a)}
+From the definition of the quaternion:
+\beq
+\mbs{\epsilon}=\mbf{a}\sin\left(\frac{\phi}{2}\right)
+\label{eq:3}
+\eeq
+\beq
+\eta=\cos\left(\frac{\phi}{2}\right)
+\label{eq:4}
+\eeq
+Taking the time derivative of \eqref{eq:3} and \eqref{eq:4}:
+\beq
+\dot{\mbs{\epsilon}}=\dot{\mbf{a}}\sin\left(\frac{\phi}{2}\right)+\mbf{a}\frac{\dot{\phi}}{2}\cos\left(\frac{\phi}{2}\right)
+\label{eq:5}
+\eeq
+\beq
+\dot{\eta}=-\frac{\dot{\phi}}{2}\sin\left(\frac{\phi}{2}\right)
+\label{eq:6}
+\eeq
+Substituting \eqref{eq:1} and \eqref{eq:2} into \eqref{eq:5} and \eqref{eq:6}:
+\begin{align*}
+\dot{\mbs{\epsilon}}
+&=
+\left(\frac{1}{2}\left[\mbf{a}^\times-
+\cot\left(\frac{\phi}{2}\right)\mbf{a}^\times\mbf{a}^\times\right]\mbs{\omega}_b^{ba}\right)\sin\left(\frac{\phi}{2}\right)+\frac{1}{2}\mbf{a}\mbf{a}^\trans\mbs{\omega}_b^{ba}\cos\left(\frac{\phi}{2}\right)
+\\ & =
+\frac{1}{2}\left\{-\underbrace{\cos\left(\frac{\phi}{2}\right)}_{\eta}\overbrace{\mbf{a}^\times\mbf{a}^\times}^{\mbf{a}\mbf{a}^\trans-\mbf{1}}+\mbf{a}\mbf{a}^\trans\underbrace{\cos\left(\frac{\phi}{2}\right)}_{\eta}+\left[\underbrace{\mbf{a}\sin\left(\frac{\phi}{2}\right)}_{\mbs{\epsilon}}\right]^\times\right\}\mbs{\omega}_b^{ba}
+\\ & =
+\frac{1}{2}\left\{\eta\left[\mbf{a}\mbf{a}^\trans-(\mbf{a}\mbf{a}^\trans-\mbf{1})\right]+\mbs{\epsilon}^\times\right\}\mbs{\omega}_b^{ba}
+\\ & =
+\frac{1}{2}\left(\eta\mbf{1}+\mbs{\epsilon}^\times\right)\mbs{\omega}_b^{ba} \quad \Box
+\\
+\\
+\\
+\dot{\eta}&=-\frac{1}{2}\sin\left(\frac{\phi}{2}\right)\mbf{a}^\trans\mbs{\omega}_b^{ba}
+\\ & =
+-\frac{1}{2}\left[\underbrace{\sin\left(\frac{\phi}{2}\right)\mbf{a}}_{\mbs{\epsilon}}\right]^\trans\mbs{\omega}_b^{ba}
+\\ & =
+-\frac{1}{2}\mbs{\epsilon}^\trans\mbs{\omega}_b^{ba} \quad \Box
+\end{align*}
+Where we have used the following identities:
+$$\mbf{a}^\trans\mbf{a}=1$$
+$$\mbf{a}^\times\mbf{a}^\times=\mbf{a}\mbf{a}^\trans-\mbf{a}^\trans\mbf{a}\mbf{1}=\mbf{a}\mbf{a}^\trans-\mbf{1}$$
+$$\cot(x)\sin(x)=\cos(x)$$
+
+\paragraph{b)}
+\begin{align*}
+\dot{\mbs{\epsilon}}
+\quad&=\quad
+\frac{1}{2}(\eta\mbf{1}+\mbs{\epsilon}^\times)\mbs{\omega}_b^{ba} 
+\\
+2(\eta\mbf{1}+\mbs{\epsilon}^\times)^{-1}\dot{\mbs{\epsilon}}
+\quad&=\quad
+\mbs{\omega}_b^{ba}
+\\
+2(\eta\mbf{1}+\eta^{-1}\mbs{\epsilon}\mbs{\epsilon}^\trans-\mbs{\epsilon}^\times)\dot{\mbs{\epsilon}}
+\quad&=\quad
+\mbs{\omega}_b^{ba}
+\\
+2(\eta\mbf{1}-\mbs{\epsilon}^\times)\dot{\mbs{\epsilon}}+2\eta^{-1}\mbs{\epsilon}\mbs{\epsilon}^\trans\dot{\mbs{\epsilon}}
+\quad&=\quad
+\mbs{\omega}_b^{ba}
+\\
+2(\eta\mbf{1}-\mbs{\epsilon}^\times)\dot{\mbs{\epsilon}}+2\eta^{-1}\mbs{\epsilon}\mbs{\epsilon}^\trans\dot{\mbs{\epsilon}}-2\eta^{-1}\mbs{\epsilon}\underbrace{(\mbs{\epsilon}^\trans\dot{\mbs{\epsilon}}+\eta\dot{\eta})}_{=\,0}
+\quad&=\quad
+\mbs{\omega}_b^{ba}
+\\
+2(\eta\mbf{1}-\mbs{\epsilon}^\times)\dot{\mbs{\epsilon}}+2\eta^{-1}\mbs{\epsilon}\mbs{\epsilon}^\trans\dot{\mbs{\epsilon}}-2\eta^{-1}\mbs{\epsilon}\mbs{\epsilon}^\trans\dot{\mbs{\epsilon}}-2\eta^{-1}\eta\dot{\eta}\mbs{\epsilon}
+\quad&=\quad
+\mbs{\omega}_b^{ba}
+\\
+2(\eta\mbf{1}-\mbs{\epsilon}^\times)\dot{\mbs{\epsilon}}-2\dot{\eta}\mbs{\epsilon}
+\quad&=\quad
+\mbs{\omega}_b^{ba}
+\\
+2\bma{cc} (\eta\mbf{1}-\mbs{\epsilon}^\times) & -\mbs{\epsilon} \ema\bma{c}\dot{\mbs{\epsilon}}\\ \dot{\eta}\ema
+\quad&=\quad
+\mbs{\omega}_b^{ba}\quad \Box
+\end{align*}
+
+\paragraph{c)}
+The equations for the quaternion rate doesn't contain any trigonometric function, making it easier to compute. More importantly, it can be shown the the quaternion rate does not suffer from any kinematic singularity, i.e. the equation $$\bma{c}\dot{\mbs{\epsilon}} \\ \dot{\eta}\ema=\mbs{\Gamma}_b^{ba}(\mbs{\epsilon},\eta)\mbs{\omega}_b^{ba}$$ can always be solved for $\mbs{\omega}_b^{ba}$. On the other hand, the equation for the rates of axis/angle parameters contains a kinematic singularity, which can be a problem.
+
+% Question 3 ----------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{}
+
+\paragraph{a)}
+First, using the fact that angular velocity physical vectors add:
+\beq
+\ura{\omega}^{ba}=\ura{\omega}^{bq}+\ura{\omega}^{qa}
+\label{eq:7}
+\eeq
+Moreover, from the definition of the problem:
+\bdis
+\mbf{C}_{qa}=\mbf{C}_3(\alpha)=\Cthree{\alpha}
+\edis
+\bdis
+\mbf{C}_{bq}=\mbf{C}_1(\beta)=\Cone{\beta}
+\edis
+Resolving the angular velocity physical vectors in the different reference frames:
+\beq
+\ura{\omega}^{ba}=\vectrix{b}^\trans\mbs{\omega}_b^{ba}
+\label{eq:8}
+\eeq
+\beq
+\ura{\omega}^{bq}=\vectrix{b}^\trans\mbs{\omega}_b^{bq}
+\label{eq:9}
+\eeq
+\beq
+\ura{\omega}^{qa}=\vectrix{q}^\trans\mbs{\omega}_q^{qa}=\vectrix{b}^\trans\mbf{C}_{bq}\mbs{\omega}_q^{qa}
+\label{eq:10}
+\eeq
+Substituting \eqref{eq:8},\eqref{eq:9} and \eqref{eq:10} into \eqref{eq:7}, and factoring $\vectrix{b}^\trans$:
+\beq
+\label{eq:11}
+\ura{\omega}^{ba}=\vectrix{b}^\trans\mbs{\omega}_b^{ba}=\vectrix{b}^\trans\underbrace{\left(\mbs{\omega}_b^{bq}+\mbf{C}_{bq}\mbs{\omega}_q^{qa}\right)}_{\mbs{\omega}_b^{ba}}
+\eeq
+By inspection:
+\beq
+\mbs{\omega}_a^{qa}=\mbs{\omega}_q^{qa}=\dot{\alpha}\mbf{1}_3
+\label{eq:12}
+\eeq
+\beq
+\mbs{\omega}_b^{bq}=\mbs{\omega}_q^{bq}=\dot{\beta}\mbf{1}_1
+\label{eq:13}
+\eeq
+Lastly, substituting \eqref{eq:12} and \eqref{eq:13} into \eqref{eq:11}:
+\begin{align*}
+\ura{\omega}^{ba}
+&=
+\vectrix{b}^\trans\left(\dot{\beta}\mbf{1}_1+\mbf{C}_{bq}(\dot{\alpha}\mbf{1}_3)\right)
+\\ & =
+\vectrix{b}^\trans\left(\colvec{\dot{\beta}}{0}{0}+\Cone{\beta}\colvec{0}{0}{\dot{\alpha}}\right)
+\\ & =
+\vectrix{b}^\trans\underbrace{\colvec{\dot{\beta}}{\sin(\beta)\dot{\alpha}}{\cos(\beta)\dot{\alpha}}}_{\mbs{\omega}_b^{ba}}
+\\ & =
+\rowvec{\dot{\beta}}{\sin(\beta)\dot{\alpha}}{\cos(\beta)\dot{\alpha}}\vectrix{b} \quad \Box
+\end{align*}
+
+\paragraph{b)}
+\begin{align*}
+{\ura{r}^{pw}}^\fdot{a}&={\ura{r}^{pz}}^\fdot{a}+{\ura{r}^{zw}}^\fdot{a}
+\\ & =
+{\ura{r}^{zw}}^\fdot{a}+{\ura{r}^{pz}}^\fdot{b}+\ura{\omega}^{ba}\times\ura{r}^{pz}
+\\ & =
+\vectrix{a}^\trans\dot{\mbf{r}}_a^{zw}+\vectrix{b}^\trans\dot{\mbf{r}}_b^{pz}+\vectrix{b}^\trans{\mbs{\omega}_b^{ba}}^\times\mbf{r}_b^{pz}
+\\ & =
+\vectrix{b}^\trans\mbf{C}_{ba}\dot{\mbf{r}}_a^{zw}+\vectrix{b}^\trans\dot{\mbf{r}}_b^{pz}+\vectrix{b}^\trans{\mbs{\omega}_b^{ba}}^\times\mbf{r}_b^{pz}
+\\ & =
+\vectrix{b}^\trans\underbrace{\left(\mbf{C}_{ba}\dot{\mbf{r}}_a^{zw}+\dot{\mbf{r}}_b^{pz}+{\mbs{\omega}_b^{ba}}^\times\mbf{r}_b^{pz}\right)}_{\mbf{v}_b^{pw/a}}
+\end{align*}
+Where we have used the Transport Theorem. 
+
+By inspection and from a):
+\begin{align*}
+\mbf{C}_{ba}&=\mbf{C}_3(\alpha)\mbf{C}_1(\beta)
+\\ &=
+\Cthree{\alpha}\Cone{\beta}
+\\ & =
+\matr{\cos(\alpha)}{\sin(\alpha)\cos(\beta)}{\sin(\alpha)\sin(\beta)}{-\sin(\alpha)}{\cos(\alpha)\cos(\beta)}{\cos(\alpha)\sin(\beta)}{0}{-\sin(\beta)}{\cos(\beta)}
+\\
+\\
+\mbf{r}_a^{zw}
+&=
+\colvec{0}{0}{-l^{zw}},
+\qquad
+\dot{\mbf{r}}_a^{zw}=\colvec{0}{0}{-\dot{l}^{zw}}
+\\
+\mbf{r}_b^{pz}
+&=
+\colvec{0}{l^{pz}}{0},
+\qquad
+\dot{\mbf{r}}_b^{pz}=\colvec{0}{\dot{l}^{pz}}{0}=\colvec{0}{0}{0} \quad (p\mbox{ fixed})
+\\
+\\
+{\mbs{\omega}_b^{ba}}^\times\mbf{r}_b^{pz}
+&=
+\colvec{\dot{\beta}}{\sin(\beta)\dot{\alpha}}{\cos(\beta)\dot{\alpha}}^\times\colvec{0}{l^{pz}}{0}
+\\ & =
+\crossop{\dot{\beta}}{\sin(\beta)\dot{\alpha}}{\cos(\beta)\dot{\alpha}}\colvec{0}{l^{pz}}{0}
+\\ & =
+\colvec{-l^{pz}\cos(\beta)\dot{\alpha}}{0}{l^{pz}\dot{\beta}}
+\\
+\\
+\mbf{C}_{ba}\dot{\mbf{r}}_a^{zw}
+&=
+\matr{\cos(\alpha)}{\sin(\alpha)\cos(\beta)}{\sin(\alpha)\sin(\beta)}{-\sin(\alpha)}{\cos(\alpha)\cos(\beta)}{\cos(\alpha)\sin(\beta)}{0}{-\sin(\beta)}{\cos(\beta)}\colvec{0}{0}{-\dot{l}^{zw}}
+\\ & =
+\colvec{-\dot{l}^{zw}\sin(\alpha)\sin(\beta)}{-\dot{l}^{zw}\cos(\alpha)\sin(\beta)}{-\dot{l}^{zw}\cos(\beta)}
+\end{align*}
+And finally, substituting these identities into the expression for $\mbf{v}_b^{pw/a}$:
+$$
+\mbf{v}_b^{pw/a}=\colvec{-\dot{l}^{zw}\sin(\alpha)\sin(\beta)-l^{pz}\cos(\beta)\dot{\alpha}}{-\dot{l}^{zw}\cos(\alpha)\sin(\beta)}{-\dot{l}^{zw}\cos(\beta)+l^{pz}\dot{\beta}}
+$$
+(As far as I understand the problem, $l^{zw}$ and $\beta$ are not constant in time but $l^{pz}$ is.)
+
+\end{document}
+
+

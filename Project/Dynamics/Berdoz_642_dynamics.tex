@@ -1,0 +1,1029 @@
+\documentclass[journal,twocolumns]{IEEEtran}
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+\usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  \graphicspath{{../Simulation/plots/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+ % \DeclareGraphicsExtensions{.pdf,.jpeg,.png,.eps}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at: 
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/tex-archive/info/epslatex/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+% Prof. Forbes math packages
+\usepackage{amsmath} % cmex10
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+
+%accents
+\usepackage[latin1]{inputenc} 
+
+\hyphenation{La-grange La-grang-ian dy-nam-ics}
+
+% Matrix command
+\newcommand{\bma}[1]{\left[\begin{array}{#1}}
+\newcommand{\ema}{\end{array}\right]}
+\newcommand{\trans}{{\ensuremath{\mathsf{T}}}} % transpose
+\newcommand{\utimes}{ {\raisebox{-0.6ex}{ \kern-1.0ex\raisebox{0.6ex}{ \small $\mathsf{v}$}}} } % 
+\newcommand{\onehalf}{\mbox{$\textstyle{\frac{1}{2}}$}}
+
+% Bold symbols
+\DeclareMathAlphabet{\mbf}{OT1}{ptm}{b}{n} % for bold face Roman
+\newcommand{\mbs}[1]{{\boldsymbol{#1}}} % for bold face Greek
+
+% Other bold symbols 
+\newcommand{\mbfbar}[1]{{\bar{\mbf{#1}}}}
+\newcommand{\mbfhat}[1]{{\hat{\mbf{#1}}}}
+\newcommand{\mbftilde}[1]{{\tilde{\mbf{#1}}}}
+\newcommand{\mbsbar}[1]{{\bar{\boldsymbol{#1}}}}
+\newcommand{\mbshat}[1]{{\hat{\boldsymbol{#1}}}}
+\newcommand{\mbstilde}[1]{{\tilde{\boldsymbol{#1}}}}
+
+% Physical Space, physical vectors, a vectrix, etc. 
+\newcommand{\pspace}{\mathbb{P}} 
+\newcommand{\ura}[1]{{\underrightarrow{{#1}}}}
+\newcommand{\vectrix}[1]{\ensuremath \underrightarrow{\boldsymbol{\mathcal{F}}}_{#1}}
+\def\fdota{{\raisebox{-2pt}{\LARGE $\cdot$}}}
+\def\fdotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ$}}}}
+\def\fddota{{\raisebox{-2pt}{\LARGE $\cdot\hspace*{-0.2ex}\cdot$}}}
+\def\fddotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ\circ$}}}}
+\newcommand{\fdot}[1]{{^{\fdota{\mbox{\footnotesize${#1}$}}}}}
+\newcommand{\fddot}[1]{{^{\fddota{\mbox{\footnotesize${#1}$}}}}}
+
+
+% Short form for equations
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bdis}{\begin{displaymath}}
+\newcommand{\edis}{\end{displaymath}}
+\newcommand{\beqarray}{\begin{eqnarray}}
+\newcommand{\eeqarray}{\end{eqnarray}}
+\newcommand{\beqarraynn}{\begin{eqnarray*}}
+\newcommand{\eeqarraynn}{\end{eqnarray*}}
+
+%Must be equal to ...
+\newcommand{\mbeq}{\overset{!}{=}}
+
+% Matrices shortcut
+\newcommand{\crossop}[3]{\bma{ccc} 0 & -#3 & #2 \\ #3 & 0 & -#1 \\ -#2 & #1 & 0 \ema}
+\newcommand{\matr}[9]{\bma{ccc} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \ema}
+\newcommand{\matrr}[4]{\bma{cc} #1 & #2  \\ #3 & #4  \ema}
+\newcommand{\colvec}[3]{\bma{c} #1 \\ #2 \\ #3 \ema}
+\newcommand{\rowvec}[3]{\bma{ccc} #1 & #2 & #3 \ema}
+\newcommand{\colvecc}[2]{\bma{c} #1 \\ #2 \ema}
+\newcommand{\rowvecc}[2]{\bma{cc} #1 & #2 \ema}
+\newcommand{\Cone}[1]{\matr{1}{0}{0}{0}{\cos(#1)}{\sin(#1)}{0}{-\sin(#1)}{\cos(#1)}}
+\newcommand{\Ctwo}[1]{\matr{\cos(#1)}{0}{-\sin(#1)}{0}{1}{0}{\sin(#1)}{0}{\cos(#1)}}
+\newcommand{\Cthree}[1]{\matr{\cos(#1)}{\sin(#1)}{0}{-\sin(#1)}{\cos(#1)}{0}{0}{0}{1}}
+\newcommand{\uo}{\ura{\omega}}
+\newcommand{\ur}{\ura{r}}
+
+\newcommand*\dif{\mathop{}\!\mathrm{d}}
+\newcommand*\ex{\mathop{}\!\mathrm{ex}}
+\newcommand{\sys}{\mathcal{A}}
+\newcommand{\fbf}{\mbox{\textit{\textbf{f}}}}
+\newcommand{\ddt}{\frac{\dif}{\dif t}}
+
+\newcommand{\Sp}{\mathcal{S}}
+\newcommand{\De}{\mathcal{D}}
+
+\newcommand{\intd}{\int\displaylimits}
+\begin{document}
+
+\title{Project Dynamics - ADR Spacecraft}
+
+
+\author{Frédéric Berdoz, 260867318}% <-this % stops a space
+\markboth{MECH 642 -- Advanced Dynamics}%
+{Advanced Dynamics}
+
+\maketitle
+
+\IEEEpeerreviewmaketitle
+
+\section{Approach}
+\IEEEPARstart{I}{n} order to derive the equations of motion of the system, the Lagrangian approach will be used. Each body will be treated separately and the equations of motion will be coupled using collocation and attitude constraints. Moreover, as it is assumed to be in deep space, gravity will be neglected, i.e. $\ura{g}=\ura{0}$ (see Proposal). 
+
+\section{Integration over the Bodies}
+Let $\Sp$ denote the continuous rigid body of the spacecraft wall, $\De$ the debris and $\sys$  the whole system ($\Sp$+W1+W2+$\De$). In order to shorten the notation, let $\mbs{\digamma}^{\mathcal{B}}(\mbf{x})$ denote the integration of the quantity $\mbf{x}$ (scalar or matrix) over the body $\mathcal{B}$. In particular, using the the parameters defined in the Project Kinematics\footnote{In the Project Kinematics, the outer radius of the spacecraft was denoted by $\rho_s$. However, in order to prevent any confusion with the parameterization of $\mbf{r}_s^{\dif m_s p}$, $\rho_o$ will be used instead.}:
+\begin{align*}
+\mbs{\digamma}^{\Sp}(\mbf{x})
+&\triangleq
+\intd_0^{\rho_o} \intd_0^{2\pi} \intd_0^{t_s}\mbf{x} \,\rho_s \dif z_s \dif \theta_s\dif \rho_s 
+\\ &
+\quad+\intd_{(\rho_o-t_s)}^{\rho_o} \intd_0^{2\pi} \intd_{t_s}^{(l_s-t_s)}\mbf{x}\,\rho_s \dif z_s \dif \theta_s\dif \rho_s 
+ \\&
+\quad+\intd_0^{\rho_o} \intd_0^{2\pi} \intd_{(l_s-t_s)}^{l_s}\mbf{x} \,\rho_s \dif z_s \dif \theta_s\dif \rho_s,
+\\
+\mbs{\digamma}^{W1}(\mbf{x})
+&\triangleq
+\intd_0^{\rho_1} \intd_0^{2\pi} \intd_{-\frac{l_1}{2}}^{\frac{l_1}{2}}\mbf{x} \,\rho_a \dif z_a \dif \theta_a\dif \rho_a,
+\\
+\mbs{\digamma}^{W2}(\mbf{x})
+&\triangleq
+\intd_0^{\rho_2} \intd_0^{2\pi} \intd_{-\frac{l_2}{2}}^{\frac{l_2}{2}}\mbf{x} \,\rho_b \dif z_b \dif \theta_b\dif \rho_b,
+\\
+\mbs{\digamma}^{\De}(\mbf{x})
+&\triangleq
+\intd_{-\frac{l_d}{2}}^{\frac{l_d}{2}} \intd_{-\frac{l_d}{2}}^{\frac{l_d}{2}} \intd_{-\frac{l_d}{2}}^{\frac{l_d}{2}}\mbf{x} \dif z_d \dif y_d\dif x_d.
+\end{align*}
+
+
+\section{Mass Properties}
+As mentioned in the Proposal, the total mass of the spacecraft is assumed to remain constant. Moreover, the density of each body is constant over itself. Therefore, let $\sigma_s$, $\sigma_1$, $\sigma_2$ and $\sigma_d$ be the density of $\Sp$, W1, W2 and $\De$, respectively. The corresponding masses have already been defined as $m_s$, $m_1$, $m_2$ and $m_d$. Additionally, let $V_s$, $V_1$, $V_2$ and $V_d$ be the corresponding volumes, given by:
+\begin{align*}
+V_s=\mbs{\digamma}^{\Sp}(1),
+& \quad
+V_1=\mbs{\digamma}^{W1}(1),
+& 
+V_2=\mbs{\digamma}^{W2}(1), 
+& \quad
+V_d=\mbs{\digamma}^{\De}(1).
+\end{align*}
+Therefore, the masses simply become:
+\begin{align*}
+m_s=\sigma_sV_s,
+& \quad
+m_1=\sigma_1V_1,
+& 
+m_2=\sigma_2V_2, 
+& \quad
+m_d=\sigma_dV_d.
+\end{align*}
+%Lastly,
+%\bdis
+%m_\mathcal{A}=m_s+m_1+m_2.
+%\edis
+The relevant first moments of mass of each body are given by:
+\begin{align*}
+&\ura{c}^{\Sp p}=m_s\ur^{g_s p}=\rowvec{0}{0}{\onehalf m_s l_s}\vectrix{s},
+\\
+%&\ura{c}^{W1 p}= \rowvec{0}{0}{m_1z_1}\vectrix{s},
+%\\
+%&\ura{c}^{W2 p}= \rowvec{0}{0}{m_2z_2}\vectrix{s},
+%\\
+&\ura{c}^{W1 g_1}=\ura{c}^{W2 g_2}=\ura{c}^{\De g_d}=\ura{0}.
+\end{align*}
+Similarly, using the following identities:
+\bdis
+\ura{J}^{\mathcal{B}z}=\vectrix{b}^\trans\mbf{J}_b^{\mathcal{B}z}\vectrix{b}, \quad \mbf{J}_b^{\mathcal{B}z}=-\int_{\mathcal{B}}{\mbf{r}_b^{\dif mz}}^\times{\mbf{r}_b^{\dif mz}}^\times \dif m,
+\edis
+one can compute the second moments of mass of each body resolved in their respective body frame. In particular,
+\begin{align*}
+&\mbf{J}_s^{\Sp p}=\mbs{\digamma}^{\Sp}(-\sigma_s{\mbf{r}_s^{\dif m_sp^\times}}{\mbf{r}_s^{\dif m_sp^\times}}),
+\\
+&\mbf{J}_a^{W1 g_1}=\mbs{\digamma}^{W1}(-\sigma_1{\mbf{r}_a^{\dif m_1g_1^\times}}{\mbf{r}_a^{\dif m_1g_1^\times}}),
+\\
+&\mbf{J}_b^{W2 g_2}=\mbs{\digamma}^{W2}(-\sigma_2{\mbf{r}_b^{\dif m_2g_2^\times}}{\mbf{r}_b^{\dif m_2g_2^\times}}),
+\\
+&\mbf{J}_d^{\De g_d}=\mbs{\digamma}^{\De}(-\sigma_d{\mbf{r}_d^{\dif m_dg_d^\times}}{\mbf{r}_d^{\dif m_dg_d^\times}}),
+%\\
+%&\mbf{J}_s^{W1 p}=-m_1{\mbf{r}_s^{g_1p^\times}}{\mbf{r}_s^{g_1p^\times}},
+%\\
+%&\mbf{J}_s^{W2 p}=-m_2{\mbf{r}_s^{g_2p^\times}}{\mbf{r}_s^{g_2p^\times}},
+%\\ &
+%\mbf{J}_s^{\mathcal{A}p}=\mbf{J}_s^{\Sp p}+\mbf{J}_s^{W1 p}+\mbf{J}_s^{W2 p}.
+\end{align*}
+where
+\begin{align*}
+&{\mbf{r}_s^{\dif m_sp^\times}}{\mbf{r}_s^{\dif m_sp^\times}}=\matr
+{-z_s^2-\rho_s^2s^2_{\theta_s}}{\rho_s^2s_{\theta_s}c_{\theta_s}}{z_s\rho_sc_{\theta_s}}
+{\rho_s^2s_{\theta_s}c_{\theta_s}}{-z_s^2-\rho_s^2c^2_{\theta_s}}{z_s\rho_ss_{\theta_s}}
+{z_s\rho_sc_{\theta_s}}{z_s\rho_ss_{\theta_s}}{-\rho_s^2},
+\\
+&{\mbf{r}_a^{\dif m_1g_1^\times}}{\mbf{r}_a^{\dif m_1g_1^\times}}=\matr
+{-z_a^2-\rho_a^2s^2_{\theta_a}}{z_a\rho_ac_{\theta_a}}{\rho_a^2s_{\theta_a}c_{\theta_a}}
+{z_a\rho_ac_{\theta_a}}{-\rho_a^2}{z_a\rho_as_{\theta_a}}
+{\rho_a^2s_{\theta_a}c_{\theta_a}}{z_a\rho_as_{\theta_a}}{-z_a^2-\rho_a^2c^2_{\theta_a}},
+\\
+&{\mbf{r}_b^{\dif m_2g_2^\times}}{\mbf{r}_b^{\dif m_2g_2^\times}}=\matr
+{-z_b^2-\rho_b^2s^2_{\theta_b}}{\rho_b^2s_{\theta_b}c_{\theta_b}}{z_b\rho_bc_{\theta_b}}
+{\rho_b^2s_{\theta_b}c_{\theta_b}}{-z_b^2-\rho_b^2c^2_{\theta_b}}{z_b\rho_bs_{\theta_b}}
+{z_b\rho_bc_{\theta_b}}{z_b\rho_bs_{\theta_b}}{-\rho_b^2},
+\\
+&{\mbf{r}_d^{\dif m_dg_d^\times}}{\mbf{r}_d^{\dif m_dg_d^\times}}=\matr
+{-z_d^2-y_d^2}{x_dy_d}{x_dz_d}
+{x_dy_d}{-z_d^2-x_d^2}{y_dz_d}
+{x_dz_d}{y_dz_d}{-x_d^2-y_d^2}.
+\end{align*}
+This allows to define the following mass matrices:
+\footnotesize
+\begin{align*}
+\mbf{M}^{\Sp p}&\triangleq\matrr{m_s\mbf{1}}{-\mbf{C}_{es}{\mbf{c}_s^{\Sp p}}^\times}{{\mbf{c}_s^{\Sp p}}^\times\mbf{C}_{es}^\trans}{\mbf{J}_s^{\Sp p}}, 
+&\mbf{M}^{W1 g_1}&\triangleq\matrr{m_1\mbf{1}}{\mbf{0}}{\mbf{0}}{\mbf{J}_a^{W1 g_1}}, \\
+\mbf{M}^{W2 g_2}&\triangleq\matrr{m_2\mbf{1}}{\mbf{0}}{\mbf{0}}{\mbf{J}_b^{W2 g_2}}, 
+&\mbf{M}^{\De g_d}&\triangleq\matrr{m_d\mbf{1}}{\mbf{0}}{\mbf{0}}{\mbf{J}_d^{\De g_d}}, 
+\end{align*}
+\bdis
+\mbf{M}\triangleq\mbox{diag}\left\{\mbf{M}^{\Sp p},\mbf{M}^{W1 g_1},\mbf{M}^{W2 g_2},\mbf{M}^{\De g_d}\right\}.
+\edis
+\normalsize
+\section{Control}
+The spacecraft has three linear actuators (P1, P2 and P3) and two rotary actuators (W1 and W2). The direction of the thrust produced by the propellers is assumed to remain perpendicular to the surface of the spacecraft, and directed towards it (no pull). Let $p$, $p_2$ and $p_3$ be the points where the actuators P1, P2 and P3 are fixed to the spacecraft, respectively. Under these assumptions,
+\begin{align*}
+\ura{f}^{p}&=\rowvec{0}{0}{f^{P1}}\vectrix{s},
+\\ 
+\ura{f}^{p_2}&=\rowvec{0}{0}{-f^{P2}}\vectrix{s},
+\\
+\ura{f}^{p_3}&=\rowvec{0}{0}{-f^{P3}}\vectrix{s}.
+\end{align*}
+Additionally, let $\ura{\tau}^{W1 \Sp}$ and $\ura{\tau}^{W2 \Sp}$ be the torques applied on W1 and W2 by the actuators placed on the spacecraft wall. From Newton's third law, the torques applied on the wall by the reaction wheels, $\ura{\tau}^{\Sp W1}$ and $\ura{\tau}^{ \Sp W2}$, are simply given by
+\bdis
+\ura{\tau}^{\Sp W1}=-\ura{\tau}^{W1\Sp}, \quad \ura{\tau}^{\Sp W2}=-\ura{\tau}^{W2\Sp}.
+\edis
+Resolving these physical vectors in the body frames yields
+\begin{align*}
+\ura{\tau}^{W1 \Sp}&=\rowvec{0}{\tau^{W1}}{0}\vectrix{a},\\
+\ura{\tau}^{\Sp W1}&=\rowvec{0}{-\tau^{W1}}{0}\vectrix{s}, \\
+\ura{\tau}^{W2\Sp}&=\rowvec{0}{0}{\tau^{W2}}\vectrix{b}, \\
+ \ura{\tau}^{\Sp W2}&=\rowvec{0}{0}{-\tau^{W2}}\vectrix{s}.
+\end{align*}
+Therefore, the behavior of the system only depends on the initial configuration and the following controllable (time-dependent) quantity: 
+\bdis
+\mathfrak{f}\triangleq\bma{ccccc} f^{P1} & f^{P2} & f^{P3} & \tau^{W1} & \tau^{W2} \ema^\trans.
+\edis
+\section{Generalized Coordinates}
+The chosen set of generalized coordinates $\mbf{q}$ is given by
+\bdis
+\mbf{q}
+%=\underset{k=1,...,48}{\mbox{col}}\{q_k\}=\underset{\ell=1,...,8}{\mbox{col}}\{\mbf{q}_\ell\}
+\triangleq\bma{c}
+\mbf{q}^\Sp \\
+\mbf{q}^{W1}\\
+\mbf{q}^{W2}\\
+\mbf{q}^\De
+\ema
+\triangleq\bma{c}
+\mbf{r}_e^{po} \\
+\mbf{q}^{se} \\
+\mbf{r}_e^{g_1o} \\
+\mbf{q}^{ae}  \\
+\mbf{r}_e^{g_2o} \\
+\mbf{q}^{be}  \\
+\mbf{r}_e^{g_do} \\
+\mbf{q}^{de}  \\
+\ema,
+\edis
+%\footnotesize
+%\bdis
+%\mbf{q}
+%%=\underset{k=1,...,48}{\mbox{col}}\{q_k\}=\underset{\ell=1,...,8}{\mbox{col}}\{\mbf{q}_\ell\}
+%\triangleq\bma{cccccccc}
+%{\mbf{r}_e^{po}}^\trans &
+%{\mbf{q}^{se} }^\trans &
+%{\mbf{r}_e^{g_1o} }^\trans &
+%{\mbf{q}^{ae} }^\trans &
+%{\mbf{r}_e^{g_2o}}^\trans &
+%{\mbf{q}^{be}}^\trans &
+%{\mbf{r}_e^{g_do}}^\trans &
+%{\mbf{q}^{de} }^\trans
+%\ema^\trans,
+%\edis
+%\normalsize
+where
+\bdis
+\mbf{q}^{se}\triangleq\colvec{{\mbf{s}_e^1}}{{\mbf{s}_e^2}}{{\mbf{s}_e^3}}, \quad \mbf{q}^{ae}\triangleq\colvec{{\mbf{a}_e^1}}{{\mbf{a}_e^2}}{{\mbf{a}_e^3}},
+\edis
+\bdis
+\mbf{q}^{be}\triangleq\colvec{{\mbf{b}_e^1}}{{\mbf{b}_e^2}}{{\mbf{b}_e^3}}, \quad \mbf{q}^{de}\triangleq\colvec{{\mbf{d}_e^1}}{{\mbf{d}_e^2}}{{\mbf{d}_e^3}}.
+\edis
+In addition, the selected augmented velocities and reduced augmented velocities of the system are given by
+\bdis
+\mbs{\nu}
+%=\bma{c} \mbs{\nu}_s \\ \mbs{\nu}_a \\ \mbs{\nu}_b \\ \mbs{\nu}_d\ema
+ \triangleq\bma{c}
+\mbf{v}_e^{po/e} \\
+\mbs{\omega}_s^{se} \\
+\mbf{v}_e^{g_1o/e} \\
+\mbs{\omega}_a^{ae}  \\
+\mbf{v}_e^{g_2o/e} \\
+\mbs{\omega}_b^{be}  \\
+\mbf{v}_e^{g_do/e} \\
+\mbs{\omega}_d^{de}  \\
+\ema, 
+\qquad 
+\hat{\mbs{\nu}}
+ \triangleq\bma{c}
+\mbf{v}_e^{po/e}  \\
+\mbs{\omega}_s^{se} \\
+\dot{\alpha} \\
+\dot{\beta} \\
+\mbf{v}_e^{g_do/e} \\
+\mbs{\omega}_d^{de} 
+\ema.
+\edis
+The relation between $\dot{\mbf{q}}$ and $\mbs{\nu}$ is given by
+\bdis
+\dot{\mbf{q}}=\mbs{\Gamma}\mbs{\nu},
+\edis
+where 
+\bdis
+\mbs{\Gamma}\triangleq\mbox{diag}\left\{\mbf{1},\mbs{\Gamma}_s^{se},\mbf{1},\mbs{\Gamma}_a^{ae},\mbf{1},\mbs{\Gamma}_b^{be},\mbf{1},\mbs{\Gamma}_d^{de}\right\},
+\edis
+and the relation between $\mbs{\nu}$ and $\hat{\mbs{\nu}}$ is
+\bdis
+\mbs{\nu}=\mbs{\Pi}\hat{\mbs{\nu}},
+\edis
+where 
+\bdis
+\mbs{\Pi}\triangleq \bma{cccccc}
+\mbf{1} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{1} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{1} & \mbs{\Pi}_{3,2} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbs{\Pi}_{4,2} & \mbs{\Pi}_{4,3} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{1} & \mbs{\Pi}_{5,2} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbs{\Pi}_{6,2} & \mbf{0} &\mbs{\Pi}_{6,4} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{1} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{1}
+\ema,
+\edis
+\begin{align*}
+\mbs{\Pi}_{3,2}&\triangleq-\mbf{C}_{es}{\mbf{r}_s^{g_1p}}^\times, &\mbs{\Pi}_{4,2}&\triangleq\mbf{C}_{as},  \\
+\mbs{\Pi}_{4,3}&\triangleq\mbf{S}_a^{as}, &\mbs{\Pi}_{5,2}&\triangleq-\mbf{C}_{es}{\mbf{r}_s^{g_2p}}^\times, \\
+ \mbs{\Pi}_{6,2}&\triangleq\mbf{C}_{bs},  &\mbs{\Pi}_{6,4}&\triangleq\mbf{S}_b^{bs}.
+\end{align*}
+
+\section{Constraints}
+There are four kinematic constraints, two collocation constraints and two attitude constraints. The kinematic constraints, related to the DCMs, can be expressed as follows \cite{Slide8}:
+\bdis
+\mbs{\Phi}_{kin}(\mbf{q})
+\triangleq \bma{c} 
+\mbs{\Phi}_{se}(\mbf{q}^{se}) \\
+\mbs{\Phi}_{ae}(\mbf{q}^{ae}) \\
+\mbs{\Phi}_{be}(\mbf{q}^{be}) \\
+\mbs{\Phi}_{de}(\mbf{q}^{de})
+\ema
+%\bma{c}
+%{\mbf{s}_e^1}^\trans\mbf{s}_e^1-1 \\
+%{\mbf{s}_e^2}^\trans\mbf{s}_e^2-1 \\
+%{\mbf{s}_e^2}^\trans\mbf{s}_e^1 \\
+%{\mbf{s}_e^1}^\times\mbf{s}_e^2-\mbf{s}_e^3 \\
+%{\mbf{a}_e^1}^\trans\mbf{a}_e^1-1 \\
+%{\mbf{a}_e^2}^\trans\mbf{a}_e^2-1 \\
+%{\mbf{a}_e^2}^\trans\mbf{a}_e^1 \\
+%{\mbf{a}_e^1}^\times\mbf{a}_e^2-\mbf{s}_e^3 \\
+%{\mbf{b}_e^1}^\trans\mbf{b}_e^1-1 \\
+%{\mbf{b}_e^2}^\trans\mbf{b}_e^2-1 \\
+%{\mbf{b}_e^2}^\trans\mbf{b}_e^1 \\
+%{\mbf{b}_e^1}^\times\mbf{b}_e^2-\mbf{s}_e^3 \\
+%{\mbf{d}_e^1}^\trans\mbf{d}_e^1-1 \\
+%{\mbf{d}_e^2}^\trans\mbf{d}_e^2-1 \\
+%{\mbf{d}_e^2}^\trans\mbf{d}_e^1 \\
+%{\mbf{d}_e^1}^\times\mbf{d}_e^2-\mbf{d}_s^3 
+%\ema
+\mbeq \mbf{0}.
+\edis
+where
+\small
+\begin{align*}
+\mbs{\Phi}_{se}(\mbf{q}^{se})&\triangleq
+\bma{c} 
+{\mbf{s}_e^1}^\trans\mbf{s}_e^1-1 \\
+{\mbf{s}_e^2}^\trans\mbf{s}_e^2-1 \\
+{\mbf{s}_e^2}^\trans\mbf{s}_e^1 \\
+{\mbf{s}_e^1}^\times\mbf{s}_e^2-\mbf{s}_e^3
+\ema, &
+\mbs{\Phi}_{ae}(\mbf{q}^{ae})&\triangleq
+\bma{c} 
+{\mbf{a}_e^1}^\trans\mbf{a}_e^1-1 \\
+{\mbf{a}_e^2}^\trans\mbf{a}_e^2-1 \\
+{\mbf{a}_e^2}^\trans\mbf{a}_e^1 \\
+{\mbf{a}_e^1}^\times\mbf{a}_e^2-\mbf{s}_e^3 
+\ema, \\
+\mbs{\Phi}_{be}(\mbf{q}^{be})&\triangleq
+\bma{c} 
+{\mbf{b}_e^1}^\trans\mbf{b}_e^1-1 \\
+{\mbf{b}_e^2}^\trans\mbf{b}_e^2-1 \\
+{\mbf{b}_e^2}^\trans\mbf{b}_e^1 \\
+{\mbf{b}_e^1}^\times\mbf{b}_e^2-\mbf{s}_e^3
+\ema, &
+\mbs{\Phi}_{de}(\mbf{q}^{de})&\triangleq
+\bma{c} 
+{\mbf{d}_e^1}^\trans\mbf{d}_e^1-1 \\
+{\mbf{d}_e^2}^\trans\mbf{d}_e^2-1 \\
+{\mbf{d}_e^2}^\trans\mbf{d}_e^1 \\
+{\mbf{d}_e^1}^\times\mbf{d}_e^2-\mbf{d}_s^3
+\ema.
+\end{align*}
+\normalsize
+Additionally, the Pfaffian form of the kinematic constraints is given by
+\bdis
+\mbs{\Xi}^{kin}\dot{\mbf{q}}=\mbf{0},
+\edis
+where
+\bdis
+\mbs{\Xi}^{kin}\triangleq\bma{cccccccc}
+\mbf{0} & \mbs{\Xi}_s^{se} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbs{\Xi}_a^{ae} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbs{\Xi}_b^{be} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbs{\Xi}_d^{de} 
+\ema,
+\edis
+\footnotesize
+\bdis
+\mbs{\Xi}_s^{se} \triangleq
+\bma{ccc}
+2{\mbf{s}_e^1}^\trans & \mbf{0} & \mbf{0} \\
+\mbf{0} & 2{\mbf{s}_e^2}^\trans & \mbf{0} \\
+{\mbf{s}_e^2}^\trans & {\mbf{s}_e^1}^\trans & \mbf{0} \\
+-{\mbf{s}_e^2}^\times & {\mbf{s}_e^1}^\times & -\mbf{1}
+\ema, 
+\quad 
+\mbs{\Xi}_a^{ae} \triangleq
+\bma{ccc}
+2{\mbf{a}_e^1}^\trans & \mbf{0} & \mbf{0} \\
+\mbf{0} & 2{\mbf{a}_e^2}^\trans & \mbf{0} \\
+{\mbf{a}_e^2}^\trans & {\mbf{a}_e^1}^\trans & \mbf{0} \\
+-{\mbf{a}_e^2}^\times & {\mbf{a}_e^1}^\times & -\mbf{1}
+\ema, 
+\edis
+\bdis
+\mbs{\Xi}_b^{be} \triangleq
+\bma{ccc}
+2{\mbf{b}_e^1}^\trans & \mbf{0} & \mbf{0} \\
+\mbf{0} & 2{\mbf{b}_e^2}^\trans & \mbf{0} \\
+{\mbf{b}_e^2}^\trans & {\mbf{b}_e^1}^\trans & \mbf{0} \\
+-{\mbf{b}_e^2}^\times & {\mbf{b}_e^1}^\times & -\mbf{1}
+\ema, 
+\quad
+\mbs{\Xi}_d^{de} \triangleq
+\bma{ccc}
+2{\mbf{d}_e^1}^\trans & \mbf{0} & \mbf{0} \\
+\mbf{0} & 2{\mbf{d}_e^2}^\trans & \mbf{0} \\
+{\mbf{d}_e^2}^\trans & {\mbf{d}_e^1}^\trans & \mbf{0} \\
+-{\mbf{d}_e^2}^\times & {\mbf{d}_e^1}^\times & -\mbf{1}
+\ema.
+\edis
+\normalsize
+The two collocation constraints are the following:
+\begin{align*}
+\ur^{g_1 o}&\mbeq\ur^{g_1 p}+\ur^{po}, \\
+\ur^{g_2 o}&\mbeq\ur^{g_2 p}+\ur^{po}.
+\end{align*}
+Taking the time derivative w.r.t. $\mathcal{F}_e$ and using the Transport theorem, one can obtain directly the Pfaffian form of the collocation constraints:
+\bdis
+\mbs{\Xi}^{col}\dot{\mbf{q}}=\mbf{0},
+\edis
+where
+\bdis
+\mbs{\Xi}^{col}\triangleq\bma{cccccccc}
+\mbf{1} & \mbs{\Xi}_{1,2}^{col} & -\mbf{1} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{1} & \mbs{\Xi}_{2,2}^{col} & \mbf{0} & \mbf{0} & -\mbf{1} & \mbf{0} & \mbf{0} & \mbf{0}
+\ema,
+\edis
+\begin{align*}
+\mbs{\Xi}_{1,2}^{col}&\triangleq-\mbf{C}_{es}{\mbf{r}_s^{g_1 p}}^\times\mbf{S}_s^{se}, & \mbs{\Xi}_{2,2}^{col}&\triangleq-\mbf{C}_{es}{\mbf{r}_s^{g_2 p}}^\times\mbf{S}_s^{se}.
+\end{align*}
+Additionally, the attitude constraints are stated as follows:
+\bdis
+\omega_{a1}^{as}=\omega_{a3}^{as}\mbeq0,
+\edis
+\bdis
+\omega_{b1}^{bs}=\omega_{b2}^{bs}\mbeq0,
+\edis
+and the corresponding Pfaffian form is
+\bdis
+\mbs{\Xi}^{att}\dot{\mbf{q}}=\mbf{0},
+\edis
+where
+\bdis
+\mbs{\Xi}^{att}\triangleq\bma{cccccccc}
+\mbf{0} & \mbs{\Xi}_{1,2}^{att} & \mbf{0} & \mbs{\Xi}_{1,4}^{att} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbs{\Xi}_{2,2}^{att} & \mbf{0} & \mbf{0} & \mbf{0} & \mbs{\Xi}_{2,6}^{att}& \mbf{0} & \mbf{0}
+\ema,
+\edis
+\begin{align*}
+\mbs{\Xi}_{1,2}^{att}&\triangleq-\colvecc{\mbf{1}_1^\trans}{\mbf{1}_3^\trans}\mbf{C}_{as}\mbf{S}_s^{se},  &\mbs{\Xi}_{1,4}^{att}&\triangleq\colvecc{\mbf{1}_1^\trans}{\mbf{1}_3^\trans}\mbf{S}_a^{ae}, \\
+\mbs{\Xi}_{2,2}^{att}&\triangleq-\colvecc{\mbf{1}_1^\trans}{\mbf{1}_2^\trans}\mbf{C}_{bs}\mbf{S}_s^{se}, \quad &\mbs{\Xi}_{2,6}^{att}&\triangleq\colvecc{\mbf{1}_1^\trans}{\mbf{1}_2^\trans}\mbf{S}_b^{be} .
+\end{align*}
+Finally, all the constraints are arranged in a matrix format:
+\bdis
+\mbs{\Xi}\triangleq\colvec{\mbs{\Xi}^{kin}}{\mbs{\Xi}^{col}}{\mbs{\Xi}^{att}}.
+\edis
+
+\section{Generalized Forces and Moments}
+The generalized forces and moments can be written as follows:
+\bdis
+\mbs{f}
+\triangleq\bma{c}
+\mbs{f}_s \\
+\mbs{f}_a \\
+\mbs{f}_b \\
+\mbs{f}_d 
+\ema.
+\edis
+In order to find $\mbs{f}_s$, one must first find the virtual work done on $\Sp$ by the external torques:
+\bdis
+\delta W_{\Sp}^\tau=\ura{\tau}^{\Sp W1}\cdot \delta \ura{\gamma}^\Sp+\ura{\tau}^{\Sp W2}\cdot \delta \ura{\gamma}^\Sp,
+\edis
+where 
+
+\bdis 
+\delta \ura{\gamma}^\Sp=\rowvec{\delta \gamma^\Sp_{e1}}{\delta \gamma^\Sp_{e2}}{\delta \gamma^\Sp_{e3}}\vectrix{e}
+\edis
+is a virtual angular displacement of $\Sp$. A simple graphical analysis yields
+\bdis
+\delta \gamma^\Sp_{e1}={\mbf{s}_e^3}^\trans\delta \mbf{s}_e^2, \quad \delta \gamma^\Sp_{e2}={\mbf{s}_e^1}^\trans\delta \mbf{s}_e^3, \quad \delta \gamma^\Sp_{e1}={\mbf{s}_e^2}^\trans\delta \mbf{s}_e^1,
+\edis
+and the virtual work $\delta W_{\Sp}^\tau$ becomes
+\bdis
+\delta W_{\Sp}^\tau={\mbs{f}_s^\tau}^\trans\delta\mbf{q}^\Sp, \quad {\mbs{f}_s^\tau}=\bma{c} \mbf{0} \\ -\tau^{W2}{\mbf{s}_e^2}  \\ \mbf{0} \\ -\tau^{W1}{\mbf{s}_e^1} \ema.
+\edis
+On the other hand, the generalized forces and moments due to the forces are given by
+\bdis
+{\mbs{f}_s^f}^\trans=\ura{f}^p\cdot\frac{\partial \ura{r}^{po}}{\partial \mbf{q}^\Sp}
++\ura{f}^{p_2}\cdot\frac{\partial \ura{r}^{p_2o}}{\partial \mbf{q}^\Sp}
++\ura{f}^{p_3}\cdot\frac{\partial \ura{r}^{p_3o}}{\partial \mbf{q}^\Sp}.
+\edis
+Resolving every physical vector in the $\mathcal{F}_e$ frame yields
+\bdis
+\mbf{f}_e^p=\mbf{s}_e^3f^{P1}, \quad \mbf{f}_e^{p_2}=-\mbf{s}_e^3f^{P2}, \quad \mbf{f}_e^{p_3}=-\mbf{s}_e^3f^{P3}, 
+\edis
+\bdis 
+\mbf{r}_e^{p_2o}=\mbf{r}_e^{po}-\rho_p\mbf{s}_e^2+l_s\mbf{s}_e^3, \quad \mbf{r}_e^{p_3o}=\mbf{r}_e^{po}+\rho_p\mbf{s}_e^2+l_s\mbf{s}_e^3,
+\edis
+and $\mbs{f}_s^f$ becomes
+\bdis
+{\mbs{f}_s^f}=\bma{c}
+(f^{P1}-f^{P2}-f^{P3})\mbf{s}_e^3 \\
+\mbf{0} \\
+\rho_s(f^{P2}-f^{P3})\mbf{s}_e^3 \\
+-l_s(f^{P2}+f^{P3})\mbf{s}_e^3
+\ema.
+\edis
+Therefore, $\mbs{f}_s$ can be written as follows:
+\bdis
+\mbs{f}_s=\mbs{f}_s^f+\mbs{f}_s^\tau=\mbf{B}_s\mathfrak{f},
+\edis
+\bdis
+ \mbf{B}_s\triangleq
+\bma{ccccc}
+\mbf{s}_e^3 & -\mbf{s}_e^3 & -\mbf{s}_e^3 & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & -\mbf{s}_e^2 \\
+\mbf{0} & \rho_s\mbf{s}_e^3 & -\rho_s \mbf{s}_e^3 & \mbf{0} & \mbf{0} \\
+\mbf{0} & -l_s\mbf{s}_e^3 & -l_s\mbf{s}_e^3 & -\mbf{s}_e^1 &\mbf{0}
+\ema.
+\edis
+With a similar analysis,
+\bdis
+\mbs{f}_a=\mbf{B}_a\mathfrak{f}, \quad \mbs{f}_b=\mbf{B}_b\mathfrak{f}, \quad \mbs{f}_d=\mbf{0},
+\edis
+where
+\begin{align*}
+ \mbf{B}_a&\triangleq
+\bma{ccccc}
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{a}_e^1 & \mbf{0} 
+\ema, &
+ \mbf{B}_b&\triangleq
+\bma{ccccc}
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{b}_e^2 \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} 
+\ema.
+\end{align*}
+Lastly, the general forces and moments of the whole system can be written concisely as
+\bdis
+\mbs{f}=\mbf{B}\mathfrak{f}, \quad 
+\mbf{B}\triangleq\bma{c}
+\mbf{B}_s \\
+\mbf{B}_a \\
+\mbf{B}_ b \\
+ \mbf{0}
+\ema.
+\edis
+\section{Equations of motion}
+Since potential energies are neglected, one can simply compute the Lagrangian of the system as follows:
+\beq
+L_{\sys o/e}=T_{\sys o/e}=\onehalf \mbs{\nu}^\trans \mbf{M}\mbs{\nu}.
+\label{eq:Lagrangian}
+\eeq
+Additionally, the general form of the Lagrange's Equation is given by
+\beq
+\frac{\dif}{\dif t}\left(\frac{\partial L_{\sys o/e}}{\partial \dot{\mbf{q}}}\right)^\trans-\left(\frac{\partial L_{\sys o/e}}{\partial \mbf{q}}\right)^\trans=\mbs{f}+ \mbs{\Xi}^\trans\mbs{\lambda}.
+\label{eq:LagEq}
+\eeq
+Substituting \eqref{eq:Lagrangian} into \eqref{eq:LagEq} and using the the derivation shown in \cite{Slide8,Slide9}, the equation of motion can be written as
+\beq
+\mbf{S}^\trans\mbf{M}\dot{\mbs{\nu}}+\mbf{S}^\trans\dot{\mbf{M}}\mbs{\nu}+\dot{\mbf{S}}^\trans\mbf{M}\mbs{\nu}-\mbs{\Delta}^\trans\mbf{M}\mbs{\nu}-\mbf{a}_{non}=\mbf{B}\mbf{\mathfrak{f}}+\mbs{\Xi}^\trans\mbs{\lambda}
+\label{eq:EM1}
+\eeq
+where 
+\bdis
+\mbf{S}\triangleq\mbox{diag}\left\{\mbf{S}_s,\mbf{S}_a,\mbf{S}_b\mbf{S}_d\right\},
+\edis
+\begin{align*}
+\mbf{S}_s&\triangleq\mbox{diag}\left\{\mbf{1},\mbf{S}_s^{se}\right\}, &
+\mbf{S}_a&\triangleq\mbox{diag}\left\{\mbf{1},\mbf{S}_a^{ae}\right\}, \\
+\mbf{S}_b&\triangleq\mbox{diag}\left\{\mbf{1},\mbf{S}_b^{be}\right\}, &
+\mbf{S}_d&\triangleq\mbox{diag}\left\{\mbf{1},\mbf{S}_d^{de}\right\},
+\end{align*}
+\bdis
+\mbs{\Delta}\triangleq\mbox{diag}\left\{\mbs{\Delta}_s,\mbs{\Delta}_a,\mbs{\Delta}_b,\mbs{\Delta}_d\right\},
+\edis
+\begin{align*}
+\mbs{\Delta}_s&\triangleq\mbox{diag}\left\{\mbf{0},{\frac{\partial \mbs{\omega}_s^{se}}{\partial \mbf{q}^{se}}}\right\}, &
+\mbs{\Delta}_a&\triangleq\mbox{diag}\left\{\mbf{0},{\frac{\partial \mbs{\omega}_a^{ae}}{\partial \mbf{q}^{ae}}}\right\}, \\
+\mbs{\Delta}_b&\triangleq\mbox{diag}\left\{\mbf{0},{\frac{\partial \mbs{\omega}_b^{be}}{\partial \mbf{q}^{be}}}\right\}, &
+\mbs{\Delta}_d&\triangleq\mbox{diag}\left\{\mbf{0},{\frac{\partial \mbs{\omega}_d^{de}}{\partial \mbf{q}^{de}}}\right\}, \\
+\end{align*}
+\bdis
+\mbf{a}_{non}\triangleq\bma{cccc}
+\mbf{a}_{non,s}^\trans &
+\mbf{0}&
+\mbf{0}&
+\mbf{0}
+\ema^\trans,
+\edis
+\bdis
+\mbf{a}_{non,s}\triangleq\colvecc{\mbf{0}}{-\frac{\partial(\mbf{C}_{se}\mbf{v}_e^{po/e})^\trans}{\partial \mbf{q}^{se}}{\mbf{c}_s^{\Sp p}}^\times\mbs{\omega}_s^{se}}. 
+%\\\mbf{a}_{non,a}&=\mbf{a}_{non,b}=\mbf{a}_{non,d}\triangleq\colvecc{\mbf{0}}{\mbf{0}}.
+\edis
+\section{Null Space method}
+
+Premultiplying \eqref{eq:EM1} on the left by $\mbs{\Pi}^\trans\mbs{\Gamma}^\trans$  and using the following identities:
+\bdis
+\mbs{\Gamma}^\trans\mbf{S}^\trans=\mbf{1}, \qquad \mbs{\Pi}^\trans\mbs{\Gamma}^\trans\mbs{\Xi}^\trans=\mbf{0}, 
+\edis
+\bdis
+ \mbs{\nu}=\mbs{\Pi}\hat{\mbs{\nu}}, \qquad\mbs{\Gamma}^\trans\left(\mbf{S}^\trans-\mbs{\Delta}^\trans\right)=\mbs{\Omega},
+\edis
+\bdis
+ \mbs{\Omega}\triangleq\mbox{diag}\left\{\mbf{0},{\mbs{\omega}_s^{se}}^\times,\mbf{0},{\mbs{\omega}_a^{ae}}^\times,\mbf{0},{\mbs{\omega}_b^{be}}^\times,\mbf{0},{\mbs{\omega}_d^{de}}^\times\right\},
+\edis
+one can rewrite the equations of motion concisely as
+\beq
+\hat{\mbf{M}}\dot{\hat{\mbs{\nu}}}=\hat{\mbs{f}}_{non}+\hat{\mbs{f}},
+\label{eq:EM}
+\eeq
+where
+\bdis
+\hat{\mbf{M}}\triangleq\mbs{\Pi}^\trans\mbf{M}\mbs{\Pi}, 
+\edis
+\bdis
+\hat{\mbs{f}}_{non}\triangleq\left(-\mbs{\Pi}^\trans\mbf{M}\dot{\mbs{\Pi}}-\mbs{\Pi}^\trans\dot{\mbf{M}}\mbs{\Pi}-\mbs{\Pi}^\trans\mbs{\Omega}\mbf{M}\mbs{\Pi}\right)\hat{\mbs{\nu}}+\mbs{\Pi}^\trans\mbs{\Gamma}^\trans\mbf{a}_{non},
+\edis
+\bdis
+\hat{\mbs{f}}\triangleq\mbs{\Pi}^\trans\mbs{\Gamma}^\trans\mbf{B}\mbf{\mathfrak{f}}.
+\edis
+
+\newpage
+
+
+
+
+
+
+
+
+
+%\section{Generalized Coordinates}
+%Recall that
+%\begin{align*}
+%\mbf{C}_{es} &=\mbf{C}_{se}^\trans=\rowvec{{\mbf{s}_e^1}}{{\mbf{s}_e^2}}{{\mbf{s}_e^3}},
+%\\
+%\mbf{C}_{sd}&=\mbf{C}_{ds}^\trans=\rowvec{{\mbf{d}_s^1}}{{\mbf{d}_s^2}}{{\mbf{d}_s^3}}.
+%\end{align*}
+%Therefore, the chosen set of dependent generalized coordinates $\mbf{q}$ is given by
+%\beq
+%\mbf{q}=\underset{k=1,...,26}{\mbox{col}}\{q_k\}=\underset{\ell=1,...,10}{\mbox{col}}\{\mbf{q}_\ell\}\triangleq\bma{c}
+%\mbf{r}_e^{po} \\
+%\mbf{r}_e^{g_do}\\
+%\mbf{s}_e^{1} \\
+%\mbf{s}_e^{2} \\
+%\mbf{s}_e^{3} \\
+%\mbf{d}_s^{1} \\
+%\mbf{d}_s^{2} \\
+%\mbf{d}_s^{3} \\
+%\alpha \\
+%\beta
+%\ema.
+%\label{eq:qdef}
+%\eeq
+%It was previously shown that the system has 14 degrees of freedom. Since $\mbf{q}$ has 26 components, 12 constraints are needed. As derived in \cite{Slide}, these constraints, related to $\mbf{C}_{se}$ and $\mbf{C}_{ds}$, can be arranged in a matrix format as follows:
+%\beq
+%\mbs{\Phi}(\mbf{q})=
+%\bma{c}
+%{\mbf{s}_e^1}^\trans\mbf{s}_e^1-1 \\
+%{\mbf{s}_e^2}^\trans\mbf{s}_e^2-1 \\
+%{\mbf{s}_e^2}^\trans\mbf{s}_e^1 \\
+%{\mbf{s}_e^1}^\times\mbf{s}_e^2-\mbf{s}_e^3 \\
+%{\mbf{d}_s^1}^\trans\mbf{d}_s^1-1 \\
+%{\mbf{d}_s^2}^\trans\mbf{d}_s^2-1 \\
+%{\mbf{d}_s^2}^\trans\mbf{d}_s^1 \\
+%{\mbf{d}_s^1}^\times\mbf{d}_s^2-\mbf{d}_s^3
+%\ema
+%= \mbf{0}.
+%\label{eq:constraint}
+%\eeq
+%The Pfaffian Form  of \eqref{eq:constraint} is given by:
+%\bdis
+%\mbs{\Xi}\dot{\mbf{q}}=\mbf{0},\label{eq:Pfaffian Form}
+%\edis
+%where 
+%\bdis
+%\mbs{\Xi}\triangleq
+%\bma{cccc}
+%\mbf{0}_{6\times6} & \mbs{\Xi}_s^{se} & \mbf{0}_{6\times9} & \mbf{0}_{6\times2} \\
+%\mbf{0}_{6\times6} & \mbf{0}_{6\times9} & \mbs{\Xi}_d^{ds} & \mbf{0}_{6\times2}
+%\ema,
+%\edis
+%\bdis
+%\mbs{\Xi}_s^{se} \triangleq 
+%\bma{ccc}
+%2{\mbf{s}_e^1}^\trans & \mbf{0} & \mbf{0} \\
+%\mbf{0} & 2{\mbf{s}_e^2}^\trans & \mbf{0} \\
+%{\mbf{s}_e^2}^\trans & {\mbf{s}_e^1}^\trans & \mbf{0} \\
+%-{\mbf{s}_e^2}^\times & {\mbf{s}_e^1}^\times & -\mbf{1}
+%\ema, 
+%\edis
+%\bdis
+%\mbs{\Xi}_d^{ds} \triangleq 
+%\bma{ccc}
+%2{\mbf{d}_s^1}^\trans & \mbf{0} & \mbf{0} \\
+%\mbf{0} & 2{\mbf{d}_s^2}^\trans & \mbf{0} \\
+%{\mbf{d}_s^2}^\trans & {\mbf{d}_s^1}^\trans & \mbf{0} \\
+%-{\mbf{d}_s^2}^\times & {\mbf{d}_s^1}^\times & -\mbf{1}
+%\ema.
+%\edis
+%
+%\section{Kinetic Energies}
+%%In order to find the kinetic energy of the whole system $T_{\sys o/e}$, one must first compute the kinetic energy of each body. These are given by:
+%%\begin{align*}
+%%&T_{\Sp o/e}=\onehalf m_s{\mbf{v}_e^{po/e}}^\trans\mbf{v}_e^{po/e}-{\mbf{v}_e^{po/e}}^\trans\mbf{C}_{es}{\mbf{c}_s^{\Sp p}}^\times\mbs{\omega}_s^{se}+\onehalf{\mbs{\omega}_s^{se}}^\trans \mbf{J}_s^{\Sp p}\mbs{\omega}_s^{se}, \\
+%%&T_{W1 o/e}=\onehalf m_1 {\mbf{v}_e^{g_1o/e}}^\trans\mbf{v}_e^{g_1o/e}+\onehalf{\mbs{\omega}_a^{ae}}^\trans \mbf{J}_a^{W1 g_1}\mbs{\omega}_a^{ae}, \\
+%%&T_{W2 o/e}=\onehalf m_2 {\mbf{v}_e^{g_2o/e}}^\trans\mbf{v}_e^{g_2o/e}+\onehalf{\mbs{\omega}_b^{be}}^\trans \mbf{J}_b^{W2g_2}\mbs{\omega}_b^{be}, \\
+%%&T_{\De o/e}=\onehalf m_d {\mbf{v}_e^{g_do/e}}^\trans\mbf{v}_e^{g_do/e}+\onehalf{\mbs{\omega}_d^{de}}^\trans \mbf{J}_d^{\De g_d}\mbs{\omega}_d^{de}.
+%%\end{align*}
+%Defining the following quantities:
+%\begin{align*}
+%\mbs{\nu}\triangleq\bma{c}
+%\mbf{v}_e^{po/e} \\
+%\mbf{v}_e^{g_do/e} \\
+%\mbs{\omega}_s^{se} \\
+%\mbs{\omega}_a^{ae} \\
+%\mbs{\omega}_b^{be} \\
+%\mbs{\omega}_d^{de} \\
+%\ema=\mbf{S}\dot{\mbf{q}}, \quad \mbf{S}=\matrr{\mbf{1}_{6\times6}}{\mbf{0}_{6\times20}}{\mbf{0}_{12\times6}}{\bar{\mbf{S}}},
+%\end{align*}
+%where
+%\bdis
+%\bar{\mbf{S}}=
+%\bma{cccc}
+%\mbf{S}_s^{se} & \mbf{0} & \mbf{0} & \mbf{0} \\
+%\mbf{S}_s^{se} & \mbf{0} & \mbf{C}_{es}\mbf{S}_s^{as} & \mbf{0} \\
+%\mbf{S}_s^{se} & \mbf{0} & \mbf{0} & \mbf{C}_{es}\mbf{S}_s^{bs} \\
+%\mbf{0} & \mbf{S}_d^{de} & \mbf{0} & \mbf{0}
+%\ema,
+%\edis
+%and also the mass matrix $\mbf{M}$:
+%\footnotesize
+%\bdis
+%\mbf{M}\triangleq
+%\bma{cccccc}
+%m_\mathcal{A}\mbf{1} & \mbf{0} & -\mbf{C}_{es}{ \mbf{c}_s^{\mathcal{A}p}}^\times & \mbf{0} & \mbf{0} & \mbf{0} \\
+%\mbf{0} & m_d \mbf{1} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+%{ \mbf{c}_s^{\mathcal{A}p}}^\times\mbf{C}_{es}^\trans & \mbf{0} & \mbf{J}_s^{\mathcal{A}}& \mbf{0} & \mbf{0} & \mbf{0} \\
+%\mbf{0} & \mbf{0} & \mbf{0} &\mbf{J}_a^{W1 g_1} & \mbf{0} & \mbf{0} \\
+%\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{J}_b^{W2 g_2} & \mbf{0} \\
+%\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{J}_d^{\De g_d}
+%\ema,
+%\edis
+%\normalsize
+%one can simply compute the kinetic energy of the system as follows:
+%\bdis
+%T_{\sys o/e}=\onehalf \mbs{\nu}^\trans \mbf{M}\mbs{\nu}=\onehalf {\dot{\mbf{q}}}^\trans\hat{\mbf{M}}\dot{\mbf{q}},
+%\edis
+%where
+%\bdis
+%\hat{\mbf{M}}\triangleq\mbf{S}^\trans \mbf{M}\mbf{S}.
+%\edis
+%Finally, since potential energies are neglected,
+%\bdis
+%L_{\sys o/e}=T_{\sys o/e}.
+%\edis
+%
+%\section{Generalized Forces and Moments}
+%The generalized forces and moments can be written as follows:
+%\bdis
+%\mbs{f}=\underset{\ell=1,...,10}{\mbox{col}}\{\mbs{f}_\ell^\trans\},
+%\edis
+%where $\mbs{f}_\ell$ is given by
+%\bdis
+%\mbs{f}_\ell=\ura{f}^p\cdot\frac{\partial \ura{r}^{po}}{\partial \mbf{q}_\ell}
+%+\ura{f}^{p_2}\cdot\frac{\partial \ura{r}^{p_2o}}{\partial \mbf{q}_\ell}
+%+\ura{f}^{p_3}\cdot\frac{\partial \ura{r}^{p_3o}}{\partial \mbf{q}_\ell}.
+%\edis
+%Solving in $\mathcal{F}_e$, it yields
+%\bdis
+%\mbf{f}_e^p=\mbf{s}_e^3f^{P1}, \quad \mbf{f}_e^p=-\mbf{s}_e^3f^{P2}, \quad \mbf{f}_e^p=-\mbf{s}_e^3f^{P3}, 
+%\edis
+%\bdis 
+%\mbf{r}_e^{p_2o}=\mbf{r}_e^{po}-\rho_p\mbf{s}_e^2+l_s\mbf{s}_e^3, \quad \mbf{r}_e^{p_3o}=\mbf{r}_e^{po}+\rho_p\mbf{s}_e^2+l_s\mbf{s}_e^3.
+%\edis
+%Hence
+%\bdis
+%\mbs{f}=\bma{c}
+%(f^{P1}-f^{P2}-f^{P3})\mbf{s}_e^3 \\
+%\mbf{0} \\
+%\mbf{0} \\
+%\rho_p(f^{P2}-f^{P3})\mbf{s}_e^3 \\
+%-l_s(f^{P2}+f^{P3})\mbf{s}_e^3 \\
+%\mbf{0} \\
+%\mbf{0} \\
+%\mbf{0} \\
+%\mbf{0} \\
+%\mbf{0} 
+%\ema.
+%\edis
+%
+%\section{Equations of Motions}
+%One can find the equations of motion using the Lagrange's Equation:
+%\bdis
+%\frac{\dif}{\dif t}\left(\frac{\partial L_{\sys o/e}}{\partial \dot{\mbf{q}}}\right)^\trans-\left(\frac{\partial L_{\sys o/e}}{\partial \mbf{q}}\right)^\trans=\mbs{f}+\lambda \mbs{\Xi}^\trans.
+%\edis
+%The equations of motion become
+%\bdis
+%\mbf{M}\ddot{\mbf{q}}+\dot{\mbf{M}}\dot{\mbf{q}}-\frac{\partial}{\partial \mbf{q}}\left(\onehalf\dot{\mbf{q}}^\trans\mbf{M}\dot{\mbf{q}}\right)=\mbs{f}+\lambda \mbs{\Xi}^\trans.
+%\edis
+Lastly, additional simplifications can be made using
+\bdis
+\dot{\mbf{M}}=\mbox{diag}\{\dot{\mbf{M}}^{\Sp p},\mbf{0},\mbf{0},\mbf{0}\}, 
+\edis
+\bdis
+\dot{\mbf{M}}^{\Sp p}=\matrr{\mbf{0}}{-\mbf{C}_{es}{\mbs{\omega}_s^{se}}^\times{\mbf{c}_s^{\Sp p}}^\times}{-{\mbf{c}_s^{\Sp p}}^\times{\mbs{\omega}_s^{se}}^\times\mbf{C}_{es}^\trans}{\mbf{0}},
+\edis
+\small
+\bdis
+\hat{\mbf{a}}_{non,s}\triangleq\mbox{diag}\{\mbf{1},{\mbs{\Gamma}_s^{se}}^\trans\}\mbf{a}_{non,s}=\colvecc{\mbf{0}}{-\left(\mbf{C}_{es}^\trans\mbf{v}_e^{po/e}\right)^\times{\mbf{c}_s^{\Sp p}}^\times\mbs{\omega}_s^{se}},
+\edis
+\normalsize
+and
+\bdis
+\dot{\mbs{\Pi}}=\bma{cccccc}
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \dot{\mbs{\Pi}}_{3,2} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \dot{\mbs{\Pi}}_{4,2} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \dot{\mbs{\Pi}}_{5,2} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \dot{\mbs{\Pi}}_{6,2} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} \\
+\mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0} & \mbf{0}
+\ema
+\edis
+where
+\begin{align*}
+\dot{\mbs{\Pi}}_{3,2}&=-\mbf{C}_{es}{\mbs{\omega}_s^{se}}^\times{\mbf{r}_s^{g_1p}}^\times, \quad & \dot{\mbs{\Pi}}_{4,2}&=-{\mbs{\omega}_a^{as}}^\times\mbf{C}_{as}, \\
+\dot{\mbs{\Pi}}_{5,2}&=-\mbf{C}_{es}{\mbs{\omega}_s^{se}}^\times{\mbf{r}_s^{g_2p}}^\times, \quad & \dot{\mbs{\Pi}}_{6,2}&=-{\mbs{\omega}_b^{bs}}^\times\mbf{C}_{bs}.
+\end{align*}
+\section{Nummerical Integration}
+In order to integrate \eqref{eq:EM}, one can use  \textsc{Matlab} and the \emph{ode45} built-in function. This function allows to integrate a system of first order differential equations defined as follows:
+\beq
+\dot{\mbf{x}}(t)=\mbf{f}(t,\mbf{x}(t)).
+\label{eq:NumInt}
+\eeq
+For this problem, $\mbf{x}(t)$ and $\mbf{f}(t,\mbf{x}(t))$ are given by 
+\small
+\bdis
+\mbf{x}(t)\triangleq\colvecc{\mbf{q}(t)}{\hat{\mbs{\nu}}(t)} \quad \mbox{and} \quad 
+\mbf{f}(t,\mbf{x}(t))\triangleq\colvecc{\mbs{\Gamma}(\mbf{q})\mbs{\Pi}(\mbf{q})\hat{\mbs{\nu}}}{\hat{\mbf{M}}^{-1}\left(\hat{\mbs{f}}_{non}(\mbf{q},\dot{\mbf{q}})+\hat{\mbs{f}}(\mathfrak{f})\right)}.
+\edis
+\normalsize
+Note: $\dot{\mbf{q}}=\mbs{\Gamma\Pi}\hat{\mbs{\nu}}$.
+
+
+\section{Initial Configuration}
+Let $\mbf{x}_0$ denote the initial conditions of \eqref{eq:NumInt}. Since the components of $\mbf{x}_0$ are dependent, it is important to make sure they are compatible. In order to do so, one must express the augmented state of the system $\mbf{x}$ in function of the measurables\footnote{The measurables are also not independent. They will of course be compatible if the are truly measured but in the case of a simulation, one must make sure that $\mbf{s}_e^i$ and $\mbf{d_s^i}$, $i=1,2,3$,  are indeed the columns of DCMs ($\mbf{C}_{es}$ and $\mbf{C}_{sd}$, respectively).} $\bar{\mbf{q}}$ introduced in the Project Kinematics, i.e. $\mbf{x}=\mbs{\Sigma}(\bar{\mbf{q}})$ where
+\bdis \mbs{\Sigma}(\bar{\mbf{q}})\triangleq
+\bma{c}
+\mbf{r}_e^{po} \\
+\mbf{q}^{se} \\
+\mbf{r}_e^{po}+\mbf{C}_{es}\mbf{r}_s^{g_1p} \\
+\mbf{C}_{es}\mbf{C}_2^\trans(\alpha)\mbf{1}_1 \\
+\mbf{C}_{es}\mbf{C}_2^\trans(\alpha)\mbf{1}_2 \\
+\mbf{C}_{es}\mbf{C}_2^\trans(\alpha)\mbf{1}_3 \\
+\mbf{r}_e^{po}+\mbf{C}_{es}\mbf{r}_s^{g_2p} \\
+\mbf{C}_{es}\mbf{C}_3^\trans(\beta)\mbf{1}_1 \\
+\mbf{C}_{es}\mbf{C}_3^\trans(\beta)\mbf{1}_2 \\
+\mbf{C}_{es}\mbf{C}_3^\trans(\beta)\mbf{1}_3 \\
+\mbf{r}_e^{g_do} \\
+\mbf{C}_{es}\mbf{C}_{sd}\mbf{1}_1 \\
+\mbf{C}_{es}\mbf{C}_{sd}\mbf{1}_2 \\
+\mbf{C}_{es}\mbf{C}_{sd}\mbf{1}_3 \\
+\mbf{v}_e^{po/e} \\
+\mbs{\omega}_s^{se} \\
+\dot{\alpha} \\
+\dot{\beta} \\
+\mbf{v}_e^{g_do} \\
+\mbs{\omega}_d^{ds}+\mbf{C}_{sd}^\trans\mbs{\omega}_s^{se}
+\ema.
+\edis
+Lastly, $\mbf{x}_0=\mbs{\Sigma}(\bar{\mbf{q}}_0)$ where $\bar{\mbf{q}}_0=\bar{\mbf{q}}\big\rvert_{t=0}$.
+
+\section{Validation}
+In order to verify that the equations of motion are correctly derived, one can simulate the system with no external force and make sure that the laws of conservation are satisfied within the numerical accuracy of the integration. In particular, Figure \ref{fig:Ekinsys} shows that the conservation of energy of the system is verified for a particular set of non-trivial initial conditions, which is a good indicator of an accurate dynamic analysis.
+\begin{figure}[h!]
+    \centering
+        \includegraphics[width=.48\textwidth]{Energy_plot_sys_1e.png}
+    \caption{Kinetic Energy of the system over time with non-trivial initial conditions and no external forces.}
+    \label{fig:Ekinsys}
+\end{figure}
+\appendix[Complement to the Kinematic Analysis]
+In this dynamics analysis, some DCMs that have not been properly introduced in the Project Kinematics were used. In particular:
+\begin{align*}
+\mbf{C}_{es}&=\rowvec{\mbf{s}_e^1}{\mbf{s}_e^2}{\mbf{s}_e^3}, & \mbf{C}_{ea}&=\rowvec{\mbf{a}_e^1}{\mbf{a}_e^2}{\mbf{a}_e^3}, \\ 
+\mbf{C}_{eb}&=\rowvec{\mbf{b}_e^1}{\mbf{b}_e^2}{\mbf{b}_e^3}, & \mbf{C}_{ed}&=\rowvec{\mbf{d}_e^1}{\mbf{d}_e^2}{\mbf{d}_e^3}.
+\end{align*} 
+In addition, to complete the kinematic analysis, one must find the relation between the angular velocities and the parameters (or simply the components) of the DCMs. These relations are given by \cite[p. 4]{Slide8}:
+\begin{align*}
+\mbs{\omega}_s^{se}&=\mbf{S}_s^{se}\colvec{\dot{\mbf{s}}_e^1}{\dot{\mbf{s}}_e^2}{\dot{\mbf{s}}_e^3}, \quad& \mbf{S}_s^{se}&\triangleq\matr
+{\mbf{0}}{{\mbf{s}_e^3}^\trans}{\mbf{0}}
+{\mbf{0}}{\mbf{0}}{{\mbf{s}_e^1}^\trans}
+{{\mbf{s}_e^2}^\trans}{\mbf{0}}{\mbf{0}},
+ \\
+\mbs{\omega}_a^{ae}&=\mbf{S}_a^{ae}\colvec{\dot{\mbf{a}}_e^1}{\dot{\mbf{a}}_e^2}{\dot{\mbf{a}}_e^3}, \quad &\mbf{S}_a^{ae}&\triangleq\matr
+{\mbf{0}}{{\mbf{a}_e^3}^\trans}{\mbf{0}}
+{\mbf{0}}{\mbf{0}}{{\mbf{a}_e^1}^\trans}
+{{\mbf{a}_e^2}^\trans}{\mbf{0}}{\mbf{0}}, 
+\\
+\mbs{\omega}_b^{be}&=\mbf{S}_b^{be}\colvec{\dot{\mbf{b}}_e^1}{\dot{\mbf{b}}_e^2}{\dot{\mbf{b}}_e^3}, \quad& \mbf{S}_b^{be}&\triangleq\matr
+{\mbf{0}}{{\mbf{b}_e^3}^\trans}{\mbf{0}}
+{\mbf{0}}{\mbf{0}}{{\mbf{b}_e^1}^\trans}
+{{\mbf{b}_e^2}^\trans}{\mbf{0}}{\mbf{0}}, 
+\\
+\mbs{\omega}_d^{de}&=\mbf{S}_d^{de}\colvec{\dot{\mbf{d}}_e^1}{\dot{\mbf{d}}_e^2}{\dot{\mbf{d}}_e^3}, \quad &\mbf{S}_d^{de}&c\matr
+{\mbf{0}}{{\mbf{d}_e^3}^\trans}{\mbf{0}}
+{\mbf{0}}{\mbf{0}}{{\mbf{d}_e^1}^\trans}
+{{\mbf{d}_e^2}^\trans}{\mbf{0}}{\mbf{0}}, 
+\\
+\mbs{\omega}_a^{as}&=\mbf{S}_a^{as}\dot{\alpha}, \quad& \mbf{S}_a^{as}&\triangleq\mbf{1}_2, \\
+\mbs{\omega}_b^{bs}&=\mbf{S}_b^{bs}\dot{\beta}, \quad& \mbf{S}_b^{bs}&\triangleq\mbf{1}_3.
+\end{align*}
+And the inverse relations are \cite[p. 6]{Slide8}: 
+\begin{align*}
+\colvec{\dot{\mbf{s}}_e^1}{\dot{\mbf{s}}_e^2}{\dot{\mbf{s}}_e^3}&=\mbs{\Gamma}_s^{se}\mbs{\omega}_s^{se}, \quad& \mbs{\Gamma}_s^{se}&\triangleq\matr
+{\mbf{0}}{-\mbf{s}_e^3}{\mbf{s}_e^2}
+{\mbf{s}_e^3}{\mbf{0}}{-\mbf{s}_e^1}
+{-\mbf{s}_e^2}{\mbf{s}_e^1}{\mbf{0}}, 
+\\
+\colvec{\dot{\mbf{a}}_e^1}{\dot{\mbf{a}}_e^2}{\dot{\mbf{a}}_e^3}&=\mbs{\Gamma}_a^{ae}\mbs{\omega}_a^{ae}, \quad& \mbs{\Gamma}_a^{ae}&\triangleq\matr
+{\mbf{0}}{-\mbf{a}_e^3}{\mbf{a}_e^2}
+{\mbf{a}_e^3}{\mbf{0}}{-\mbf{a}_e^1}
+{-\mbf{a}_e^2}{\mbf{a}_e^1}{\mbf{0}}, 
+\\
+\colvec{\dot{\mbf{b}}_e^1}{\dot{\mbf{b}}_e^2}{\dot{\mbf{b}}_e^3}&=\mbs{\Gamma}_b^{be}\mbs{\omega}_b^{be}, \quad& \mbs{\Gamma}_b^{be}&\triangleq\matr
+{\mbf{0}}{-\mbf{b}_e^3}{\mbf{b}_e^2}
+{\mbf{b}_e^3}{\mbf{0}}{-\mbf{b}_e^1}
+{-\mbf{b}_e^2}{\mbf{b}_e^1}{\mbf{0}}, 
+\\
+\colvec{\dot{\mbf{d}}_e^1}{\dot{\mbf{d}}_e^2}{\dot{\mbf{d}}_e^3}&=\mbs{\Gamma}_d^{de}\mbs{\omega}_d^{de}, \quad &\mbs{\Gamma}_d^{de}&\triangleq\matr
+{\mbf{0}}{-\mbf{d}_e^3}{\mbf{d}_e^2}
+{\mbf{d}_e^3}{\mbf{0}}{-\mbf{d}_e^1}
+{-\mbf{d}_e^2}{\mbf{d}_e^1}{\mbf{0}}, 
+\\
+\dot{\alpha}&=\mbs{\Gamma}_a^{as}\mbs{\omega}_a^{as}, \quad& \mbs{\Gamma}_a^{as}&=\mbf{1}_2^\trans, \\
+\dot{\beta}&=\mbs{\Gamma}_b^{bs}\mbs{\omega}_b^{bs}, \quad& \mbs{\Gamma}_b^{bs}&=\mbf{1}_3^\trans.
+\end{align*}
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+\end{document}
+
+

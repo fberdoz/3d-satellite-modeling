@@ -1,0 +1,301 @@
+\documentclass[11pt, oneside]{article}  	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{a4paper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+\usepackage[parfill]{parskip}    			% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+
+
+\graphicspath{ {images/} }
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage[latin1]{inputenc} 
+
+% Prof. Forbes math packages
+\usepackage{amsmath} % cmex10
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{wrapfig}
+
+% Matrix command
+\newcommand{\bma}[1]{\left[\begin{array}{#1}}
+\newcommand{\ema}{\end{array}\right]}
+\newcommand{\trans}{{\ensuremath{\mathsf{T}}}} % transpose
+\newcommand{\ctrans}{{\ensuremath{\mathsf{H}}}} % transpose
+\newcommand{\utimes}{ {\raisebox{-0.6ex}{ \kern-1.0ex\raisebox{0.6ex}{ \small $\mathsf{v}$}}} } % 
+\newcommand{\onehalf}{\mbox{$\textstyle{\frac{1}{2}}$}}
+
+% Bold symbols
+\DeclareMathAlphabet{\mbf}{OT1}{ptm}{b}{n} % for bold face Roman
+\newcommand{\mbs}[1]{{\boldsymbol{#1}}} % for bold face Greek
+
+% Other bold symbols 
+\newcommand{\mbfbar}[1]{{\bar{\mbf{#1}}}}
+\newcommand{\mbfhat}[1]{{\hat{\mbf{#1}}}}
+\newcommand{\mbftilde}[1]{{\tilde{\mbf{#1}}}}
+\newcommand{\mbsbar}[1]{{\bar{\boldsymbol{#1}}}}
+\newcommand{\mbshat}[1]{{\hat{\boldsymbol{#1}}}}
+\newcommand{\mbstilde}[1]{{\tilde{\boldsymbol{#1}}}}
+
+% Physical Space, physical vectors, a vectrix, etc. 
+\newcommand{\pspace}{\mathbb{P}} 
+\newcommand{\ura}[1]{{\underrightarrow{{#1}}}}
+\newcommand{\vectrix}[1]{\ensuremath \underrightarrow{\boldsymbol{\mathcal{F}}}_{#1}}
+\def\fdota{{\raisebox{-2pt}{\LARGE $\cdot$}}}
+\def\fdotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ$}}}}
+\def\fddota{{\raisebox{-2pt}{\LARGE $\cdot\hspace*{-0.2ex}\cdot$}}}
+\def\fddotb{{\raisebox{-0.6ex}{ \kern0.2ex\raisebox{0.8ex}{\tiny $\hspace*{-1ex}\circ\circ$}}}}
+\newcommand{\fdot}[1]{{^{\fdota{\mbox{\footnotesize${#1}$}}}}}
+\newcommand{\fddot}[1]{{^{\fddota{\mbox{\footnotesize${#1}$}}}}}
+
+
+% Short form for equations
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bdis}{\begin{displaymath}}
+\newcommand{\edis}{\end{displaymath}}
+\newcommand{\beqarray}{\begin{eqnarray}}
+\newcommand{\eeqarray}{\end{eqnarray}}
+\newcommand{\beqarraynn}{\begin{eqnarray*}}
+\newcommand{\eeqarraynn}{\end{eqnarray*}}
+
+
+\lhead{\footnotesize MECH 642\\Advanced Dynamics}
+\rhead{\footnotesize Assignment 1\\ Frédéric Berdoz, 260867318} %NUMBER
+
+\begin{document}
+
+\title{Assignment 1} %NUMBER
+\author{Frédéric Berdoz\\260867318}
+\date{}
+%\markboth{MECH 642 -- Advanced Dynamics}{}
+
+\maketitle
+
+
+
+%1----------------
+\section{}
+The definition of a subspace is the following : 
+
+A nonempty subset $\mathcal{S}$ of a vector space $\mathcal{V}$ is a subspace of $\mathcal{V}$ over the field $\mathbb{F}$ iff :
+$$\forall \mbf{v}^1,\mbf{v}^2 \in \mathcal{S} \Rightarrow \mbf{v}^1 + \mbf{v}^2 \in \mathcal{S}$$
+$$\forall \mbf{v}^1 \in \mathcal{S} \Rightarrow \alpha\mbf{v}^1\in\mathcal{S}\quad \forall \alpha \in \mathbb{F}$$
+
+Let $\mbf{r}^1,\mbf{r}^2 \in \mathcal{R}(\mbf{A})\subset \mathbb{R}^m$ and $\alpha \in \mathbb{R}$. Moreover, let $\mbf{x}^1,\mbf{x}^2 \in \mathbb{R}^n$ such that $\mbf{A} \mbf{x}^1=\mbf{r}^1$ and $\mbf{A} \mbf{x}^2=\mbf{r}^2$. We have :
+$$\mbf{A} (\mbf{x}^1+\mbf{x}^2)=\mbf{A} \mbf{x}^1+\mbf{A} \mbf{x}^2=\mbf{r}^1+\mbf{r}^2 \Rightarrow \mbf{r}^1+\mbf{r}^2 \in \mathcal{R}(\mbf{A})$$
+$$\mbf{A} (\alpha\mbf{x}^1)=\alpha\mbf{A}\mbf{x}^1=\alpha\mbf{r}^1 \Rightarrow \alpha\mbf{r}^1 \in \mathcal{R}(\mbf{A})\quad \forall \alpha \in \mathbb{R}$$
+Therefore, $\mathcal{R}(\mbf{A})$ is a subspace of $\mathbb{R}^n$ over the field $\mathbb{R}$.
+
+Note: For it to be a subspace over the field $\mathbb{C}$, we would have to consider complex values of $\mbf{r},\mbf{x}$ and $\alpha$, but it would also be valid.
+
+%2---------------
+\section{}
+\paragraph{a)}
+\begin{align*} 
+\mbox{det}\ \mbf{v}^\times & =
+0 \cdot \mbox{det}\bma{cc} 0 & -v_1 \\ v_1 & 0 \ema
+-v_3\cdot\mbox{det}\bma{cc} -v_3 & v_2 \\ v_1 & 0 \ema 
+-v_2\cdot\mbox{det}\bma{cc} -v_3 & v_2 \\ 0 & -v_1 \ema \\
+& = v_3v_1v_2-v_2v_3v_1=0
+\end{align*}
+
+\paragraph{b)}
+$\mbox{det}\ \mbf{v}^\times =0$ means that  $\mbox{det}\ \mbf{v}^\times$ is \emph{not} invertible. In other words, the columns of $\mbox{det}\ \mbf{v}^\times$ are linearly dependent and the nullity of $\mbox{det}\ \mbf{v}^\times$ is greater than 0.
+
+\paragraph{c)}
+\begin{align*} 
+\mbf{v}^\times \mbf{x} = \mbf{0} & \Leftrightarrow 
+\bma{ccc} 
+	0 & -v_3 & v_2 \\ 
+	v_3 & 0 & -v_1 \\ 
+	-v_2 & v_1 & 0 
+\ema 
+\bma{c} 
+	x_1\\
+	x_2\\
+	x_3
+\ema
+=
+\bma{c}
+	0\\
+	0\\
+	0
+\ema \\
+ & \Leftrightarrow
+\bma{c} 
+	-v_3x_2+v_2x_3\\
+	v_3x_1-v_1x_3\\
+	-v_2x_1+v_1x_2
+\ema 
+=
+\bma{c}
+	0\\
+	0\\
+	0
+\ema
+\end{align*}
+We must now consider two cases:
+\begin{enumerate}
+\item $v_1=v_2=v_3=0$ in which case $\mbf{v}^\times$ is the null matrix. Then $\nu(\mbf{v}^\times)=3$ and $\mathcal{N}(\mbf{v}^\times)=\mathbb{R}^3$.
+\item At least one of the $v_i, \ i=1,2,3$,  is different than zero. For simplicity, let's say $v_1\ne0$ (The two other cases being similar). Therefore, from the previous matrix equation and by defining $x_1/v_1=\alpha$: $$ x_1 =\frac{v_1}{v_1}x_1=\alpha v_1,\qquad x_2=\frac{v_2}{v_1}x_1=\alpha v_2, \qquad x_3=\frac{v_3}{v_1}x_1=\alpha v_3$$ 
+In other words, $\mathcal{N}(\mbf{v}^\times)=\{\mbf{x}\in\mathbb{R}^3\  | \ \mbf{x}=\alpha\mbf{v}, \ \alpha\in\mathbb{R}\}$ and $\nu(\mbf{v}^\times)=1$
+\end{enumerate}
+
+%3-----------
+\section{}
+
+\begin{align*}
+\mbox{det}\ \mbf{Q} & =\mbox{det}
+\bma{ccc} 
+	q_1^1 & q_1^2 & q_1^3\\ 
+	q_2^1 & q_2^2 & q_2^3 \\ 
+	q_3^1 & q_3^2 & q_3^3
+\ema 
+=
+q_1^1 \cdot \mbox{det}\bma{cc} q_2^2 & q_2^3 \\ q_3^2 & q_3^3 \ema
+-q_2^1\cdot\mbox{det}\bma{cc} q_1^2 & q_1^3 \\ q_3^2 & q_3^3 \ema 
++q_3^1\cdot\mbox{det}\bma{cc} q_1^2 & q_1^3 \\ q_2^2 & q_2^3 \ema \\
+& =q_1^1q_2^2q_3^3-q_1^1q_3^2q_2^3-q_2^1q_1^2q_3^3+q_2^1q_3^2q_1^3+q_3^1q_1^2q_2^3-q_3^1q_2^2q_1^3
+\end{align*}
+
+\begin{align*}
+{\mbf{q}^1}^\trans{\mbf{q}^2}^\times\mbf{q}^3 & = 
+\bma{ccc}
+q_1^1&q_2^1&q_3^1
+\ema
+\bma{ccc}
+0&-q_3^2&q_2^2\\
+q_3^2&0&-q_1^2\\
+-q_2^2&q_1^2&0
+\ema
+\bma{c}
+q_1^3\\q_2^3\\q_3^3
+\ema
+=
+\bma{ccc}
+q_1^1&q_2^1&q_3^1
+\ema
+\bma{c}
+q_2^2q_3^3-q_3^2q_2^3\\
+q_3^2q_1^3-q_1^2q_3^3\\
+q_1^2q_2^3-q_2^2q_1^3
+\ema \\
+& q_1^1q_2^2q_3^3-q_1^1q_3^2q_2^3+q_2^1q_3^2q_1^3-q_2^1q_1^2q_3^3+q_3^1q_1^2q_2^3-q_3^1q_2^2q_1^3
+\end{align*}
+After inspection, we can easily check that all the terms match, thus $\mbox{det}\ \mbf{Q}={\mbf{q}^1}^\trans{\mbf{q}^2}^\times\mbf{q}^3$.
+
+%4----------------
+\section{} 
+Let $\mbf{A}\in\mathbb{R}^{n\times n}$ such that $\mbf{A}^\trans=\mbf{A}$. Moreover, let $\lambda_i\in\mathbb{C}$ be the eigenvalues of $\mbf{A}$ and $\mbf{v}^i$ be the eigenvector associated with the eigenvalue $\lambda_i$, $i=1,...,n$. We have:
+$$ \mbf{A}\mbf{v}^i=\lambda_i\mbf{v}^i\ \Longrightarrow \ {\mbf{v}^i}^\ctrans\mbf{A}\mbf{v}^i= {\mbf{v}^i}^\ctrans\lambda_i\mbf{v}^i=\lambda_i{\mbf{v}^i}^\ctrans\mbf{v}^i \ \Longrightarrow \ \lambda_i=\frac{{\mbf{v}^i}^\ctrans\mbf{A}\mbf{v}^i}{{\mbf{v}^i}^\ctrans\mbf{v}^i}$$
+Therefore:
+$$\lambda_i^\ctrans=\left(\frac{{\mbf{v}^i}^\ctrans\mbf{A}\mbf{v}^i}{{\mbf{v}^i}^\ctrans\mbf{v}^i}\right)^\ctrans=\frac{{\mbf{v}^i}^\ctrans\mbf{A}^\ctrans\mbf{v}^i}{{\mbf{v}^i}^\ctrans\mbf{v}^i}=\frac{{\mbf{v}^i}^\ctrans\mbf{A}\mbf{v}^i}{{\mbf{v}^i}^\ctrans\mbf{v}^i}=\lambda_i \ \Longrightarrow \ \lambda_i\in\mathbb{R}$$
+
+%5-------------
+\section{}
+Let's prove that $\mbf{x}=\mbf{0}$ is the only solution to the equation $\mbf{A}\mbf{x}=\mbf{0}$ if $\mbf{A}$ has the mentioned properties.
+\bdis
+\mbf{A}\mbf{x}  =
+\bma{cc} 
+	\mbf{M} & -\mbs{\Theta}^\trans \\
+	-\mbs{\Theta} & \mbf{0}
+\ema
+\bma{c}
+	\mbf{x}^1 \\
+	\mbf{x}^2
+\ema
+=
+\bma{c}
+	\mbf{M}\mbf{x}^1-\mbs{\Theta}^\trans\mbf{x}^2 \\
+	-\mbs{\Theta}\mbf{x}^1
+\ema
+=
+\bma{c}
+	\mbf{0} \\
+	\mbf{0}
+\ema
+\edis
+From the first component equation, we get:
+\beq
+\mbf{M}\mbf{x}^1-\mbs{\Theta}^\trans\mbf{x}^2=\mbf{0}
+\label{eq:0}
+\eeq
+Multiplying both sides on the left by ${\mbf{x}^1}^\trans$:
+\beq
+{\mbf{x}^1}^\trans\mbf{M}\mbf{x}^1-{\mbf{x}^1}^\trans\mbs{\Theta}^\trans\mbf{x}^2=\mbf{0}
+\label{eq:1}
+\eeq
+Additionally, taking the transpose of the second component equation:
+\beq
+-{\mbf{x}^1}^\trans\mbs{\Theta}^\trans=\mbf{0}
+\label{eq:2}
+\eeq
+Substituting \eqref{eq:2} into \eqref{eq:1}, we get:
+\beq
+{\mbf{x}^1}^\trans\mbf{M}\mbf{x}^1=0
+\label{eq:3}
+\eeq
+
+Since $\mbf{M}>0$, the only solution to \eqref{eq:3} is $\mbf{x}^1=\mbf{0}$. We can now substitute this into \eqref{eq:0} and we find:
+\beq
+-\mbs{\Theta}^\trans\mbf{x}^2=\mbf{0}
+\label{eq:4}
+\eeq
+
+Since $\mbs{\Theta}$ is full row rank, $\mbs{\Theta}^\trans$ is full (column) rank and the only solution to \eqref{eq:4} is $\mbf{x}^2=\mbf{0}$. Therefore, $\mbf{x}=\mbf{0}$ is the only solution to the equation $\mbf{Ax}=\mbf{0}$. In other words, $\mbf{A}$ is nonsingular.
+
+Note: For simplicity, I didn't make the distinction between the different null matrices $\mbf{0}$. Their exact dimension must be determined by looking at the other terms of each equation.
+
+%6------------
+\section{}
+\paragraph{a)} By multiplying the ODE by $\mbf{M}^{-1}$ on the left and rearranging, we get:
+\bdis
+ \ddot{\mbf{q}}  =-\mbf{M}^{-1}\mbf{K} \mbf{q} 
+\edis
+Now defining $\mbf{x}$ as follows:
+\bdis
+\mbf{x}=
+\bma{c}
+\mbf{q} \\
+\dot{\mbf{q}}
+\ema
+\edis
+
+We can rewrite the ODE in the first order form:
+\bdis
+\dot{\mbf{x}}=
+\bma{c}
+\dot{\mbf{q}} \\
+\ddot{\mbf{q}}
+\ema
+=
+\bma{cc}
+\mbf{0} & \mbf{1} \\
+-\mbf{M}^{-1}\mbf{K} &\mbf{0} 
+\ema
+\bma{c}
+\mbf{q} \\
+\dot{\mbf{q}}
+\ema
+=
+\mbf{Ax}
+\edis
+where:
+\bdis
+\mbf{A}=
+\bma{cc}
+\mbf{0} & \mbf{1} \\
+-\mbf{M}^{-1}\mbf{K} &\mbf{0} 
+\ema
+\edis
+\paragraph{b)} See the following matlab code.
+
+
+\end{document}
+
+
