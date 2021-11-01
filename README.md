@@ -2,7 +2,7 @@
 ### Frédéric Berdoz (spring 2019)
 
 This repository contains my assignment solutions and the final project of the class.
-The project the 3d modelisation of a multibody satellite.
+The project is a 3d modelisation of a multibody satellite.
 
 ## Structure
 - `Assignment`: All assignments solutions (Tex source files, compiled pdf and matlab code)
