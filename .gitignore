@@ -15,10 +15,15 @@ __pycache__/
 *.ipynb_checkpoints
 
 
-# tex
+# Latex files
 *.aux
 *.bbl
 *.blg
 *.log
 *.gz
+
+#Misc
+Exemple Matlab/
+Project/Figures/
+Ressources/
 
